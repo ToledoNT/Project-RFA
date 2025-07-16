@@ -1,15 +1,13 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
-import Footer from "./components/Footer";
+import Footer from "./components/footer";
 
 export default function Home() {
   const router = useRouter();
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-black text-center px-6">
-      {/* Conteúdo principal cresce e empurra o footer para o final */}
       <main className="flex flex-col items-center justify-center flex-grow py-16">
         <h1 className="text-5xl font-extrabold text-white mb-6 drop-shadow-lg">
           Bem-vindo ao <span className="text-blue-500">GK Detailer</span>
@@ -34,8 +32,6 @@ export default function Home() {
           </button>
         </div>
       </main>
-
-      {/* Footer reutilizável com padding maior para ficar melhor visualmente */}
       <Footer />
     </div>
   );

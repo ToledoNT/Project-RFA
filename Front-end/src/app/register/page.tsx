@@ -3,11 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useState, FormEvent, ChangeEvent } from "react";
 import { InputProps, IRegisterFormData } from "../interfaces/register-interface";
-import Footer from "../components/Footer";
+import Footer from "../components/footer";
 
 export default function RegisterPage() {
   const router = useRouter();
-
   const [formData, setFormData] = useState<IRegisterFormData>({
     nome: "",
     sobrenome: "",
@@ -74,111 +73,46 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
-      <main className="flex-grow flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-lg bg-white shadow-xl rounded-xl p-8 space-y-8">
-          <h1 className="text-3xl font-extrabold text-center text-gray-900">
+      <main className="flex-grow flex items-center justify-center px-4 py-6">
+        <div className="w-full max-w-lg bg-white shadow-xl rounded-xl p-6 space-y-6">
+          <h1 className="text-2xl font-bold text-center text-gray-900">
             Criar Conta
           </h1>
-          <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-            {/* Nome e Sobrenome */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <Input
-                label="Nome"
-                name="nome"
-                value={formData.nome}
-                onChange={handleChange}
-                error={errors.nome}
-                required
-              />
-              <Input
-                label="Sobrenome"
-                name="sobrenome"
-                value={formData.sobrenome}
-                onChange={handleChange}
-                error={errors.sobrenome}
-                required
-              />
+          <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Input label="Nome" name="nome" value={formData.nome} onChange={handleChange} error={errors.nome} required />
+              <Input label="Sobrenome" name="sobrenome" value={formData.sobrenome} onChange={handleChange} error={errors.sobrenome} required />
             </div>
 
-            {/* Telefone e Nascimento */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <Input
-                label="Telefone"
-                name="telefone"
-                type="tel"
-                value={formData.telefone}
-                onChange={handleChange}
-                error={errors.telefone}
-                required
-              />
-              <Input
-                label="Nascimento"
-                name="nascimento"
-                type="date"
-                value={formData.nascimento}
-                onChange={handleChange}
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Input label="Telefone" name="telefone" type="tel" value={formData.telefone} onChange={handleChange} error={errors.telefone} required />
+              <Input label="Nascimento" name="nascimento" type="date" value={formData.nascimento} onChange={handleChange} />
             </div>
 
-            {/* CEP */}
-            <Input
-              label="CEP"
-              name="cep"
-              value={formData.cep}
-              onChange={handleChange}
-            />
+            <Input label="CEP" name="cep" value={formData.cep} onChange={handleChange} />
 
-            {/* Rua, Número, Bairro */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Input label="Rua" name="rua" value={formData.rua} onChange={handleChange} />
               <Input label="Número" name="numero" value={formData.numero} onChange={handleChange} />
               <Input label="Bairro" name="bairro" value={formData.bairro} onChange={handleChange} />
             </div>
 
-            {/* Cidade e Estado */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input label="Cidade" name="cidade" value={formData.cidade} onChange={handleChange} />
               <Input label="Estado" name="estado" value={formData.estado} onChange={handleChange} />
             </div>
 
-            {/* Email */}
-            <Input
-              label="E-mail"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={errors.email}
-              required
-            />
+            <Input label="E-mail" name="email" type="email" value={formData.email} onChange={handleChange} error={errors.email} required />
 
-            {/* Senha e Confirmar Senha */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <Input
-                label="Senha"
-                name="senha"
-                type="password"
-                value={formData.senha}
-                onChange={handleChange}
-                error={errors.senha}
-                required
-              />
-              <Input
-                label="Confirmar Senha"
-                name="confirmarSenha"
-                type="password"
-                value={formData.confirmarSenha}
-                onChange={handleChange}
-                error={errors.confirmarSenha}
-                required
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Input label="Senha" name="senha" type="password" value={formData.senha} onChange={handleChange} error={errors.senha} required />
+              <Input label="Confirmar Senha" name="confirmarSenha" type="password" value={formData.confirmarSenha} onChange={handleChange} error={errors.confirmarSenha} required />
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition
-                disabled:bg-blue-400 disabled:cursor-not-allowed`}
+              className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition disabled:bg-blue-400 disabled:cursor-not-allowed`}
             >
               {isSubmitting ? "Criando conta..." : "Criar Conta"}
             </button>
@@ -213,7 +147,7 @@ function Input({
         required={required}
         aria-invalid={!!error}
         aria-describedby={error ? `${name}-error` : undefined}
-        className={`w-full mt-1 p-3 rounded-lg border transition
+        className={`w-full mt-1 p-2 rounded-lg border transition
           ${
             error
               ? "border-red-500 focus:border-red-500 focus:ring-red-300"
@@ -223,8 +157,8 @@ function Input({
         placeholder={`Digite seu ${label.toLowerCase()}`}
         onFocus={(e) => {
           e.currentTarget.style.boxShadow = error
-            ? "0 0 8px 2px rgba(239, 68, 68, 0.4)"
-            : "0 0 8px 2px rgba(59, 130, 246, 0.4)";
+            ? "0 0 6px 1px rgba(239, 68, 68, 0.4)"
+            : "0 0 6px 1px rgba(59, 130, 246, 0.4)";
         }}
         onBlur={(e) => {
           e.currentTarget.style.boxShadow = "none";
@@ -235,6 +169,7 @@ function Input({
           {error}
         </p>
       )}
+
     </div>
   );
 }
