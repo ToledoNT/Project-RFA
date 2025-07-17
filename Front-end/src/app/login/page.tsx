@@ -30,7 +30,6 @@ export default function LoginPage() {
 
     setIsSubmitting(true);
 
-    // Simula delay de envio
     setTimeout(() => {
       setIsSubmitting(false);
 
@@ -45,7 +44,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-black px-4">
-      {/* Conteúdo do login */}
       <div className="flex-grow flex items-center justify-center">
         <div className="w-full max-w-md bg-white shadow-2xl rounded-xl p-10 space-y-8">
           <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-8 drop-shadow-md">
@@ -59,13 +57,9 @@ export default function LoginPage() {
               <input
                 type="email"
                 id="email"
-                className={`w-full p-4 rounded-lg border transition
-                  ${
-                    errors.email
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-blue-500"
-                  }
-                  text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2`}
+                className={`w-full p-4 rounded-lg border transition ${
+                  errors.email ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                } text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2`}
                 placeholder="seu@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -87,13 +81,9 @@ export default function LoginPage() {
               <input
                 type="password"
                 id="senha"
-                className={`w-full p-4 rounded-lg border transition
-                  ${
-                    errors.senha
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-blue-500"
-                  }
-                  text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2`}
+                className={`w-full p-4 rounded-lg border transition ${
+                  errors.senha ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                } text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2`}
                 placeholder="********"
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
@@ -108,6 +98,17 @@ export default function LoginPage() {
               )}
             </div>
 
+          <div className="text-right">
+          <button
+          type="button"
+    onClick={() => router.push("/recovery-pass")}
+    className="text-sm text-blue-600 hover:underline transition"
+  >
+    Esqueceu a sua senha?
+  </button>
+</div>
+
+
             <button
               type="submit"
               disabled={isSubmitting}
@@ -120,8 +121,6 @@ export default function LoginPage() {
           </form>
         </div>
       </div>
-
-      {/* Footer */}
       <Footer />
     </div>
   );

@@ -1,60 +1,36 @@
 "use client";
 
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Footer from "../components/footer";
 import Menu from "../components/menu-home";
-
-type TabType = "comprar" | "minhasRifas";
-
-interface RifaButtonProps {
-  numero: number;
-  comprado: boolean;
-  onClick: () => void;
-}
-
-const RifaButtonComponent = ({ numero, comprado, onClick }: RifaButtonProps) => (
-  <button
-    type="button"
-    disabled={comprado}
-    onClick={onClick}
-    className={`w-full py-3 rounded-full font-semibold transition select-none
-      focus:outline-none focus:ring-2 focus:ring-blue-500
-      ${
-        comprado
-          ? "bg-gray-800 cursor-not-allowed text-gray-600"
-          : "bg-blue-600 hover:bg-blue-700 text-white"
-      }`}
-    aria-disabled={comprado}
-    aria-label={
-      comprado
-        ? `Rifa número ${numero} comprada`
-        : `Comprar rifa número ${numero}`
-    }
-  >
-    {numero}
-  </button>
-);
-
-const RifaButton = memo(RifaButtonComponent);
-RifaButton.displayName = "RifaButton";
+import RifasPainel from "../components/rifa-card";
 
 export default function HomePage() {
   const router = useRouter();
-
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
   const [rifasDisponiveis, setRifasDisponiveis] = useState<number[]>([]);
   const [rifasCompradas, setRifasCompradas] = useState<number[]>([]);
-  const [activeTab, setActiveTab] = useState<TabType>("comprar");
+  const [mostrarDisponiveis, setMostrarDisponiveis] = useState(true);
+  const [mostrarPainel, setMostrarPainel] = useState(false);
 
   useEffect(() => {
     const loggedIn = localStorage.getItem("loggedIn");
+    const storedUsername = localStorage.getItem("username");
+
     if (!loggedIn) {
       router.push("/login");
       return;
     }
 
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+
     setLoading(false);
+
+    //Chamar numeros de Rifas direto do backend
     setRifasDisponiveis(Array.from({ length: 100 }, (_, i) => i + 1));
 
     const compradas = localStorage.getItem("rifasCompradas");
@@ -84,78 +60,34 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white">
-      {/* Menu fixo no topo */}
+    <div className="min-h-screen flex flex-col bg-black text-white relative">
       <Menu />
 
-      {/* Espaço para compensar o menu fixo */}
+      {/* Saudação fixa no canto superior esquerdo, mais pra baixo */}
+      <div className="absolute top-16 left-6 text-white text-sm z-50 select-none">
+        Olá, <span className="font-bold">{username}</span> 👋
+      </div>
+
       <div className="mt-20" />
 
-      {/* Conteúdo principal */}
       <main className="flex flex-col flex-1 px-6 py-8 max-w-6xl mx-auto w-full">
-        {/* Tabs */}
-        <div className="flex gap-8 mb-8 border-b border-gray-700 select-none">
-          {(["comprar", "minhasRifas"] as TabType[]).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`pb-3 font-semibold text-lg transition-colors
-                focus:outline-none focus:ring-2 focus:ring-blue-500
-                ${
-                  activeTab === tab
-                    ? "border-b-4 border-blue-500 text-blue-400"
-                    : "text-gray-400 hover:text-blue-500"
-                }`}
-              aria-selected={activeTab === tab}
-              role="tab"
-              tabIndex={activeTab === tab ? 0 : -1}
-            >
-              {tab === "comprar" ? "Comprar Rifas" : "Minhas Rifas"}
-            </button>
-          ))}
-        </div>
+        <h2 className="text-3xl font-semibold mb-6 tracking-tight">Rifas</h2>
 
-        {/* Conteúdo das abas */}
-        {activeTab === "comprar" && (
-          <section>
-            <h2 className="text-3xl font-semibold mb-6 tracking-tight">
-              Rifas Disponíveis
-            </h2>
-            <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 gap-4 max-h-[450px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-900">
-              {rifasDisponiveis.map((num) => (
-                <RifaButton
-                  key={num}
-                  numero={num}
-                  comprado={rifasCompradas.includes(num)}
-                  onClick={() => comprarRifa(num)}
-                />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {activeTab === "minhasRifas" && (
-          <section>
-            <h2 className="text-3xl font-semibold mb-6 tracking-tight">
-              Rifas Compradas
-            </h2>
-            {rifasCompradas.length === 0 ? (
-              <p className="text-gray-400 select-none">
-                Você ainda não comprou nenhuma rifa.
-              </p>
-            ) : (
-              <ul className="flex flex-wrap gap-4 justify-start">
-                {rifasCompradas.map((num) => (
-                  <li
-                    key={num}
-                    className="px-8 py-4 bg-green-600 rounded-full font-semibold select-none shadow-md text-lg"
-                  >
-                    {num}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
+        {!mostrarPainel ? (
+          <button
+            onClick={() => setMostrarPainel(true)}
+            className="px-2 py-1 mb-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold text-xs max-w-[100px] transition"
+          >
+            Ver Números
+          </button>
+        ) : (
+          <RifasPainel
+            rifasDisponiveis={rifasDisponiveis}
+            rifasCompradas={rifasCompradas}
+            mostrarDisponiveis={mostrarDisponiveis}
+            setMostrarDisponiveis={setMostrarDisponiveis}
+            comprarRifa={comprarRifa}
+          />
         )}
       </main>
 

@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Menu as MenuIcon, X, Settings } from "lucide-react";
@@ -8,10 +7,8 @@ import { FaSignOutAlt } from "react-icons/fa";
 export default function Menu() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-
   const links = [
     { label: "Início", href: "/" },
-    { label: "Serviços", href: "/servicos" },
     { label: "Sobre", href: "/sobre" },
     { label: "Contato", href: "/contato" },
   ];
@@ -86,7 +83,7 @@ export default function Menu() {
           ))}
           <li>
             <a
-              href="/configuracoes"
+              href="/config"
               onClick={() => setOpen(false)}
               className="block text-white hover:text-blue-400 transition-colors flex items-center gap-1"
             >

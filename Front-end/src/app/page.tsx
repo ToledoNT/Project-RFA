@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
+import { FaSignInAlt, FaUserPlus, FaUsers } from "react-icons/fa"; // substituído FaInfoCircle por FaUsers
 import Footer from "./components/footer";
 
 export default function Home() {
@@ -15,7 +15,9 @@ export default function Home() {
         <p className="text-blue-300 text-lg max-w-xl mb-10 drop-shadow-md">
           Faça login para comprar o seu número e garantir sua participação.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4">
+
+        {/* Botões de Login e Registro */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <button
             onClick={() => router.push("/login")}
             className="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg transition-transform active:scale-95"
@@ -29,6 +31,17 @@ export default function Home() {
             aria-label="Criar Conta"
           >
             Criar Conta <FaUserPlus size={24} />
+          </button>
+        </div>
+
+        {/* Botão Sobre Nós com mesmo estilo */}
+        <div className="mt-2">
+          <button
+            onClick={() => router.push("/sobre")}
+            className="inline-flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg transition-transform active:scale-95"
+            aria-label="Sobre Nós"
+          >
+            Sobre Nós <FaUsers size={24} />
           </button>
         </div>
       </main>
