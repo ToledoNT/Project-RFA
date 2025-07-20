@@ -8,19 +8,19 @@ import Footer from "../components/footer";
 export default function RegisterPage() {
   const router = useRouter();
   const [formData, setFormData] = useState<IRegisterFormData>({
-    nome: "",
-    sobrenome: "",
-    telefone: "",
-    nascimento: "",
+    name: "",
+    lastname: "",
+    phone: "",
+    dateOfBirth: "",
+    zipcode: "",
+    street: "",
+    number: "",
+    neighborhood: "",
+    city: "",
+    state: "",
     email: "",
-    senha: "",
-    confirmarSenha: "",
-    cep: "",
-    rua: "",
-    numero: "",
-    bairro: "",
-    cidade: "",
-    estado: "",
+    password: "",
+    confirmPass: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -44,14 +44,14 @@ export default function RegisterPage() {
   const validate = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.nome.trim()) newErrors.nome = "Nome é obrigatório";
-    if (!formData.sobrenome.trim()) newErrors.sobrenome = "Sobrenome é obrigatório";
-    if (!formData.telefone.trim()) newErrors.telefone = "Telefone é obrigatório";
+    if (!formData.name.trim()) newErrors.name = "Nome é obrigatório";
+    if (!formData.lastname.trim()) newErrors.lastname = "Sobrenome é obrigatório";
+    if (!formData.phone.trim()) newErrors.phone = "Telefone é obrigatório";
     if (!formData.email.trim()) newErrors.email = "E-mail é obrigatório";
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Formato de e-mail inválido";
-    if (!formData.senha) newErrors.senha = "Senha é obrigatória";
-    else if (formData.senha.length < 6) newErrors.senha = "Senha deve ter pelo menos 6 caracteres";
-    if (formData.senha !== formData.confirmarSenha) newErrors.confirmarSenha = "Senhas não coincidem";
+    if (!formData.password) newErrors.password = "Senha é obrigatória";
+    else if (formData.password.length < 6) newErrors.password = "Senha deve ter pelo menos 6 caracteres";
+    if (formData.password !== formData.confirmPass) newErrors.confirmarSenha = "Senhas não coincidem";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -80,33 +80,33 @@ export default function RegisterPage() {
           </h1>
           <form className="space-y-4" onSubmit={handleSubmit} noValidate>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input label="Nome" name="nome" value={formData.nome} onChange={handleChange} error={errors.nome} required />
-              <Input label="Sobrenome" name="sobrenome" value={formData.sobrenome} onChange={handleChange} error={errors.sobrenome} required />
+              <Input label="Nome" name="name" value={formData.name} onChange={handleChange} error={errors.name} required />
+              <Input label="Sobrenome" name="lastname" value={formData.lastname} onChange={handleChange} error={errors.lastname} required />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input label="Telefone" name="telefone" type="tel" value={formData.telefone} onChange={handleChange} error={errors.telefone} required />
-              <Input label="Nascimento" name="nascimento" type="date" value={formData.nascimento} onChange={handleChange} />
+              <Input label="Telefone" name="phone" type="tel" value={formData.phone} onChange={handleChange} error={errors.phone} required />
+              <Input label="Data de Nascimento" name="dateOfBirth" type="date" value={formData.dateOfBirth} onChange={handleChange} />
             </div>
 
-            <Input label="CEP" name="cep" value={formData.cep} onChange={handleChange} />
+            <Input label="CEP" name="zipcode" value={formData.zipcode} onChange={handleChange} />
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <Input label="Rua" name="rua" value={formData.rua} onChange={handleChange} />
-              <Input label="Número" name="numero" value={formData.numero} onChange={handleChange} />
-              <Input label="Bairro" name="bairro" value={formData.bairro} onChange={handleChange} />
+              <Input label="Rua" name="street" value={formData.street} onChange={handleChange} />
+              <Input label="Número" name="number" value={formData.number} onChange={handleChange} />
+              <Input label="Bairro" name="neighborhood" value={formData.neighborhood} onChange={handleChange} />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input label="Cidade" name="cidade" value={formData.cidade} onChange={handleChange} />
-              <Input label="Estado" name="estado" value={formData.estado} onChange={handleChange} />
+              <Input label="Cidade" name="city" value={formData.city} onChange={handleChange} />
+              <Input label="Estado" name="state" value={formData.state} onChange={handleChange} />
             </div>
 
             <Input label="E-mail" name="email" type="email" value={formData.email} onChange={handleChange} error={errors.email} required />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input label="Senha" name="senha" type="password" value={formData.senha} onChange={handleChange} error={errors.senha} required />
-              <Input label="Confirmar Senha" name="confirmarSenha" type="password" value={formData.confirmarSenha} onChange={handleChange} error={errors.confirmarSenha} required />
+              <Input label="Senha" name="password" type="password" value={formData.password} onChange={handleChange} error={errors.password} required />
+              <Input label="Confirmar Senha" name="confirmarSenha" type="password" value={formData.confirmPass} onChange={handleChange} error={errors.confirmarSenha} required />
             </div>
 
             <button
@@ -169,7 +169,6 @@ function Input({
           {error}
         </p>
       )}
-
     </div>
   );
 }

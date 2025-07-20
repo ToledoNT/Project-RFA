@@ -1,19 +1,19 @@
 import { ChangeEvent } from "react";
 
 export interface IRegisterFormData {
-  nome: string;
-  sobrenome: string;
-  telefone: string;
-  nascimento: string;
+  name: string;
+  lastname: string;
+  phone: string;
+  dateOfBirth: string;
+  zipcode: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  state: string;
   email: string;
-  senha: string;
-  confirmarSenha: string;
-  cep: string;
-  rua: string;
-  numero: string;
-  bairro: string;
-  cidade: string;
-  estado: string;
+  password: string;
+  confirmPass: string; 
 }
 
 export interface InputProps {
