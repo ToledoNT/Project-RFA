@@ -1,6 +1,6 @@
-import { PrismaUserRepository } from "../../db/prisma/repositories/prisma-user-repositories"; 
-import { IResponseCliente } from "../../interfaces/responses/response-client-interface"; 
-import { ResponseClienteModel } from "../../model/response/response-cliente-model"; 
+import { PrismaUserRepository } from "../../db/prisma/repositories/prisma-cliente-repository"; 
+import { IResponseCliente } from "../../interfaces/responses/response-cliente-interface";
+import { ResponseClienteModel } from "../../model/responses/response-cliente-model";
 import { CreateLog } from "../logs/create-log";
 
 export class FetchCliente {

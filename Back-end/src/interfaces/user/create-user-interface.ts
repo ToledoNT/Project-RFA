@@ -2,7 +2,7 @@ export interface ICreateUser {
   name: string;
   lastname: string;
   phone: string;
-  dateOfBirth: string; // ou string, se você estiver tratando como string no frontend
+  dateOfBirth: string; 
   zipcode: string;
   street: string;
   number: string;
@@ -11,4 +11,5 @@ export interface ICreateUser {
   state: string;
   email: string;
   password: string;
+  acesstokenApi?: string;
 }

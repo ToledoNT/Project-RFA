@@ -13,7 +13,9 @@ export class FetchClienteModel implements IFetchCliente {
   city: string;
   state: string;
   email: string;
+  password: string;             
   isEmailConfirmed: boolean;
+  acesstokenApi: string;
   createdAt: Date;
   updatedAt: Date;
 
@@ -30,7 +32,9 @@ export class FetchClienteModel implements IFetchCliente {
     this.city = value.city ?? "";
     this.state = value.state ?? "";
     this.email = value.email ?? "";
+    this.password = value.password ?? "";      
     this.isEmailConfirmed = value.isEmailConfirmed ?? false;
+    this.acesstokenApi = value.acesstokenApi ?? "";
     this.createdAt = value.createdAt ?? new Date();
     this.updatedAt = value.updatedAt ?? new Date();
   }

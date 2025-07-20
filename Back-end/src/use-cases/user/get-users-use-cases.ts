@@ -1,6 +1,6 @@
 import { CreateLog } from "../logs/create-log"; 
-import { ResponseTemplateInterface } from "../../interfaces/responses/response-templete-interface";
-import { PrismaUserRepository } from "../../db/prisma/repositories/prisma-user-repositories";
+import { PrismaUserRepository } from "../../db/prisma/repositories/prisma-cliente-repository"; 
+import { ResponseTemplateInterface } from "../../interfaces/response-template-interface";
 
 export class GetAllUsers {
   async execute(): Promise<ResponseTemplateInterface> {

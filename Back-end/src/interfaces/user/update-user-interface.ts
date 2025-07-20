@@ -1,8 +1,9 @@
 export interface IUpdateUser {
+  id?: string; 
   name?: string;
   lastname?: string;
   phone?: string;
-  dateOfBirth?: string; // ou string, dependendo do formato usado no seu app
+  dateOfBirth?: string;
   zipcode?: string;
   street?: string;
   number?: string;
@@ -11,4 +12,5 @@ export interface IUpdateUser {
   state?: string;
   email?: string;
   password?: string;
+  acesstokenApi: string;
 }

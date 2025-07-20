@@ -13,7 +13,7 @@ export class UpdateClienteController {
       return;
     }
     const resultadoClienteAntigo = await new FindClientByEmail().execute(email);
-    if (!resultadoClienteAntigo ) {
+    if (!resultadoClienteAntigo || !resultadoClienteAntigo.data || resultadoClienteAntigo.data.length === 0) {
       res.status(404).json({ erro: "Cliente não encontrado" });
       return;
     }
@@ -26,22 +26,26 @@ export class UpdateClienteController {
       return;
     }
     const dadosParaAtualizar: IUpdateUser = {
-    id,
-    name: clienteFormatado.name,
-    email: clienteFormatado.email,
-    password: clienteFormatado.password ?? "",
-    accessTokenMl: clienteFormatado.accessTokenMl ?? "",
-    refreshTokenMl: clienteFormatado.refreshTokenMl ?? "",
-    sellerIdMl: clienteFormatado.sellerIdMl ?? "",
-    refreshTokenZoho: clienteFormatado.refreshTokenZoho ?? "",
-    accessTokenZoho: clienteFormatado.accessTokenZoho ?? ""
-};
-
+      id,
+      name: clienteFormatado.name ?? "",
+      lastname: clienteFormatado.lastname ?? "",
+      phone: clienteFormatado.phone ?? "",
+      dateOfBirth: clienteFormatado.dateOfBirth ?? "",
+      zipcode: clienteFormatado.zipcode ?? "",
+      street: clienteFormatado.street ?? "",
+      number: clienteFormatado.number ?? "",
+      neighborhood: clienteFormatado.neighborhood ?? "",
+      city: clienteFormatado.city ?? "",
+      state: clienteFormatado.state ?? "",
+      email: clienteFormatado.email ?? "",
+      password: clienteFormatado.password ?? "",
+      acesstokenApi: clienteFormatado.acesstokenApi ?? ""
+    };
     const updateUser = await new UpdateUser().execute(dadosParaAtualizar);
     if (updateUser) {
       res.status(200).json({ mensagem: "Cliente atualizado com sucesso", dados: updateUser });
-      return;
+    } if(!updateUser) {
+      res.status(500).json({ erro: "Erro ao atualizar cliente" });
     }
-    res.status(500).json({ erro: "Erro ao atualizar cliente" });
   }
 }

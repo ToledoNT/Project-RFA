@@ -1,7 +1,7 @@
-import { server } from "./server";
 import dotenv from "dotenv";
+dotenv.config(); // Carrega as variáveis primeiro
+import { server } from "./server";
 server.listen(4001, () => {
-  dotenv.config();
   console.clear();
   console.log(`--Server ON--`);
 });

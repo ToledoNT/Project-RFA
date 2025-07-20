@@ -1,6 +1,6 @@
 import { CreateLog } from "../logs/create-log"; 
-import { ResponseTemplateInterface } from "../../interfaces/responses/response-templete-interface";
-import { PrismaUserRepository } from "../../db/prisma/repositories/prisma-user-repositories";
+import { ResponseTemplateInterface } from "../../interfaces/response-template-interface"; 
+import { PrismaUserRepository } from "../../db/prisma/repositories/prisma-cliente-repository"; 
 
 export class DeleteUser {
   async execute(id: string): Promise<ResponseTemplateInterface> {

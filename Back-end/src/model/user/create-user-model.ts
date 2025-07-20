@@ -1,10 +1,8 @@
-import { ICreateUser } from "../../interfaces/user/create-user-interface";
-
-export class CreateUserModel implements ICreateUser {
+export class CreateUserModel {
   name: string;
   lastname: string;
   phone: string;
-  dateOfBirth: string; 
+  dateOfBirth: string;
   zipcode: string;
   street: string;
   number: string;
@@ -13,19 +11,21 @@ export class CreateUserModel implements ICreateUser {
   state: string;
   email: string;
   password: string;
+  acesstokenApi: string;
 
-  constructor(value: any) {
-    this.name = value?.name ?? "";
-    this.lastname = value?.lastname ?? "";
-    this.phone = value?.phone ?? "";
-    this.dateOfBirth = value?.dateOfBirth ?? "";
-    this.zipcode = value?.zipcode ?? "";
-    this.street = value?.street ?? "";
-    this.number = value?.number ?? "";
-    this.neighborhood = value?.neighborhood ?? "";
-    this.city = value?.city ?? "";
-    this.state = value?.state ?? "";
-    this.email = value?.email ?? "";
-    this.password = value?.password ?? "";
+  constructor(data: Partial<CreateUserModel>) {
+    this.name = data.name ?? '';
+    this.lastname = data.lastname ?? '';
+    this.phone = data.phone ?? '';
+    this.dateOfBirth = data.dateOfBirth ?? '';
+    this.zipcode = data.zipcode ?? '';
+    this.street = data.street ?? '';
+    this.number = data.number ?? '';
+    this.neighborhood = data.neighborhood ?? '';
+    this.city = data.city ?? '';
+    this.state = data.state ?? '';
+    this.email = data.email ?? '';
+    this.password = data.password ?? '';
+    this.acesstokenApi = data.acesstokenApi ?? ''; 
   }
 }

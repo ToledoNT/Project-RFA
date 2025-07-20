@@ -13,7 +13,9 @@ export class UpdateClienteModel {
   city?: string;
   state?: string;
   email?: string;
+  password?: string;              
   isEmailConfirmed?: boolean;
+  acesstokenApi?: string; 
 
   constructor(newValue: Partial<IFetchCliente>, oldValue: IFetchCliente) {
     this.formatFields(newValue, oldValue);
@@ -32,7 +34,9 @@ export class UpdateClienteModel {
     this.city = this.getUpdatedValue(newValue.city, oldValue.city);
     this.state = this.getUpdatedValue(newValue.state, oldValue.state);
     this.email = this.getUpdatedValue(newValue.email, oldValue.email);
+    this.password = this.getUpdatedValue(newValue.password, oldValue.password);  // adicionado
     this.isEmailConfirmed = this.getUpdatedValue(newValue.isEmailConfirmed, oldValue.isEmailConfirmed);
+    this.acesstokenApi = this.getUpdatedValue(newValue.acesstokenApi, oldValue.acesstokenApi);
   }
 
   private getUpdatedValue<T>(newVal: T | undefined, oldVal: T): T {
