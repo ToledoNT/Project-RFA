@@ -32,7 +32,7 @@ export class ClienteMiddleware {
         return;
       }
 
-      if (data.password !== data.confirmPassword) {
+      if (data.password !== data.confirmPass) {
         res.status(400).json({ error: "As senhas não coincidem." });
         return;
       }

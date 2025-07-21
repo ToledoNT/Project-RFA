@@ -12,4 +12,6 @@ export interface ICreateUser {
   email: string;
   password: string;
   acesstokenApi?: string;
+  resetToken: string;
+  resetTokenExpiresAt: string;
 }

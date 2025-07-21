@@ -12,6 +12,8 @@ export class CreateUserModel {
   email: string;
   password: string;
   acesstokenApi: string;
+  resetToken: string;
+  resetTokenExpiresAt: string;
 
   constructor(data: Partial<CreateUserModel>) {
     this.name = data.name ?? '';
@@ -26,6 +28,8 @@ export class CreateUserModel {
     this.state = data.state ?? '';
     this.email = data.email ?? '';
     this.password = data.password ?? '';
-    this.acesstokenApi = data.acesstokenApi ?? ''; 
+    this.acesstokenApi = data.acesstokenApi ?? '';
+    this.resetToken = data.resetToken ?? '';
+    this.resetTokenExpiresAt = data.resetTokenExpiresAt ?? '';
   }
 }

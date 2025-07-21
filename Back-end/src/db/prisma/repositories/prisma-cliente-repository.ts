@@ -10,7 +10,6 @@ export class PrismaUserRepository {
       const response = await prisma.user.create({
         data,
       });
-      console.log(response);
       return new ResponseTemplateModel(
         true,
         201,

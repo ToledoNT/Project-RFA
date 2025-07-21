@@ -7,7 +7,6 @@ import { ClienteMiddleware } from "../middleware/cliente-middleware";
 
 const router: Router = express.Router();
 
-const userController = new CreateUserController();
 const updateClienteController = new UpdateClienteController();
 const deleteUserController = new DeleteUserController(); 
 const getAllUsersController = new GetAllUsersController();
