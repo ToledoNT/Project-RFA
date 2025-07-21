@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { BcryptPass } from "../helpers/bcrypt-generator";
 import { FieldsValidator } from "../helpers/fields-validator";
+import { isValidEmail } from "../helpers/email-validator";
 
 export class ClienteMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const data = req.body;
+    const data = req.body;
 
     const isCreatingClient =
       req.method === "POST" && req.originalUrl === "/api/user/register";
@@ -51,8 +52,36 @@ export class ClienteMiddleware {
   }
 }
 
+export class LoginMiddleware {
+  async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const data = req.body;
 
+    const isLoginRoute = req.method === "POST" && req.originalUrl === "/api/user/login";
 
+    if (isLoginRoute) {
+      const requiredFields = ["email", "password"];
+
+      for (const field of requiredFields) {
+        if (!data[field]) {
+          res.status(400).json({ message: `O campo ${field} é obrigatório.` });
+          return;
+        }
+      }
+
+      if (!isValidEmail(data.email)) {
+        res.status(400).json({ message: "Formato de email inválido." });
+        return;
+      }
+
+      if (typeof data.password !== "string" || data.password.length < 6) {
+        res.status(400).json({ message: "A senha precisa ter ao menos 6 caracteres." });
+        return;
+      }
+    }
+
+    next();
+  }
+}
   //   const headerValited = new FieldsValidator().execute(req.headers, [
   //     "access-token",
   //   ]);

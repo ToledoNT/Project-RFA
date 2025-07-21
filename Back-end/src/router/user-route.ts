@@ -3,7 +3,7 @@ import { CreateUserController } from "../controller/user/create-user-controller"
 import { UpdateClienteController } from "../controller/user/update-user-controller";
 import { DeleteUserController } from "../controller/user/delete-user-controller";
 import { GetAllUsersController } from "../controller/user/get-users-controller";
-import { ClienteMiddleware } from "../middleware/cliente-middleware";
+import { ClienteMiddleware, LoginMiddleware } from "../middleware/cliente-middleware";
 import { LoginUserController } from "../controller/user/login-user-controller";
 
 const router: Router = express.Router();
@@ -20,7 +20,7 @@ router.post(
 
   router.post(
     "/user/login",
-    // new ClienteMiddleware().handle.bind(new ClienteMiddleware()),
+    new LoginMiddleware().handle.bind(new LoginMiddleware()),
     new LoginUserController().handle.bind(new LoginUserController())
   );
 
