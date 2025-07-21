@@ -3,6 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Footer from "../components/footer";
+import { ApiService } from "../api/api-requests";
+
+const apiService = new ApiService();
 
 export default function LoginPage() {
   const router = useRouter();
@@ -13,6 +16,7 @@ export default function LoginPage() {
 
   const validate = () => {
     const newErrors: { email?: string; senha?: string } = {};
+
     if (!email) newErrors.email = "O e-mail é obrigatório";
     else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Formato de e-mail inválido";
 
@@ -20,26 +24,39 @@ export default function LoginPage() {
     else if (senha.length < 6) newErrors.senha = "A senha precisa ter ao menos 6 caracteres";
 
     setErrors(newErrors);
+
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validate()) return;
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await apiService.loginUser({ email, password: senha });
 
-      if (email === "francis.toledo@stor7.com.br" && senha === "123456") {
-        localStorage.setItem("loggedIn", "true");
-        router.push("/home");
+      if (response.success) {
+        if (response.user?.isEmailConfirmed) {
+          localStorage.setItem("loggedIn", "true");
+          await router.push("/home");
+        } else {
+          alert("Por favor, confirme seu e-mail antes de fazer login.");
+        }
       } else {
-        alert("E-mail ou senha incorretos");
+        alert(response.message || "E-mail ou senha incorretos");
       }
-    }, 1000);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("Erro ao tentar fazer login");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -98,16 +115,15 @@ export default function LoginPage() {
               )}
             </div>
 
-          <div className="text-right">
-          <button
-          type="button"
-    onClick={() => router.push("/recovery-pass")}
-    className="text-sm text-blue-600 hover:underline transition"
-  >
-    Esqueceu a sua senha?
-  </button>
-</div>
-
+            <div className="text-right">
+              <button
+                type="button"
+                onClick={() => router.push("/recovery-pass")}
+                className="text-sm text-blue-600 hover:underline transition"
+              >
+                Esqueceu a sua senha?
+              </button>
+            </div>
 
             <button
               type="submit"

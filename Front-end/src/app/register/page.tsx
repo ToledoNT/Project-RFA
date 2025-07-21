@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, FormEvent, ChangeEvent } from "react";
 import { InputProps, IRegisterFormData } from "../interfaces/register-interface";
+import { ApiService } from "../api/api-requests";
 import Footer from "../components/footer";
 
 export default function RegisterPage() {
@@ -27,10 +28,10 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
 
     if (errors[e.target.name]) {
       setErrors((prev) => {
@@ -51,33 +52,40 @@ export default function RegisterPage() {
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Formato de e-mail inválido";
     if (!formData.password) newErrors.password = "Senha é obrigatória";
     else if (formData.password.length < 6) newErrors.password = "Senha deve ter pelo menos 6 caracteres";
-    if (formData.password !== formData.confirmPass) newErrors.confirmarSenha = "Senhas não coincidem";
+    if (formData.password !== formData.confirmPass) newErrors.confirmPass = "Senhas não coincidem";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!validate()) return;
-
+  
+    if (!validate()) {
+      return;
+    }
+  
     setIsSubmitting(true);
-
-    setTimeout(() => {
-      setIsSubmitting(false);
+  
+    try {
+      const api = new ApiService();
+      await api.registerUser(formData);
       alert("Conta criada com sucesso!");
       router.push("/login");
-    }, 1000);
+    } catch (error) {
+      console.error("Erro ao registrar:", error);
+      alert("Erro ao registrar usuário.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+  
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
       <main className="flex-grow flex items-center justify-center px-4 py-6">
         <div className="w-full max-w-lg bg-white shadow-xl rounded-xl p-6 space-y-6">
-          <h1 className="text-2xl font-bold text-center text-gray-900">
-            Criar Conta
-          </h1>
+          <h1 className="text-2xl font-bold text-center text-gray-900">Criar Conta</h1>
           <form className="space-y-4" onSubmit={handleSubmit} noValidate>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input label="Nome" name="name" value={formData.name} onChange={handleChange} error={errors.name} required />
@@ -106,13 +114,13 @@ export default function RegisterPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input label="Senha" name="password" type="password" value={formData.password} onChange={handleChange} error={errors.password} required />
-              <Input label="Confirmar Senha" name="confirmarSenha" type="password" value={formData.confirmPass} onChange={handleChange} error={errors.confirmarSenha} required />
+              <Input label="Confirmar Senha" name="confirmPass" type="password" value={formData.confirmPass} onChange={handleChange} error={errors.confirmPass} required />
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition disabled:bg-blue-400 disabled:cursor-not-allowed`}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition disabled:bg-blue-400 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Criando conta..." : "Criar Conta"}
             </button>
@@ -147,13 +155,11 @@ function Input({
         required={required}
         aria-invalid={!!error}
         aria-describedby={error ? `${name}-error` : undefined}
-        className={`w-full mt-1 p-2 rounded-lg border transition
-          ${
-            error
-              ? "border-red-500 focus:border-red-500 focus:ring-red-300"
-              : "border-gray-300 focus:border-blue-300 focus:ring-blue-300"
-          }
-          text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2`}
+        className={`w-full mt-1 p-2 rounded-lg border transition ${
+          error
+            ? "border-red-500 focus:border-red-500 focus:ring-red-300"
+            : "border-gray-300 focus:border-blue-300 focus:ring-blue-300"
+        } text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2`}
         placeholder={`Digite seu ${label.toLowerCase()}`}
         onFocus={(e) => {
           e.currentTarget.style.boxShadow = error

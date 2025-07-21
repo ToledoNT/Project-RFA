@@ -17,7 +17,7 @@ export class PrismaUserRepository {
         response
       );
     } catch (error) {
-      console.error("Erro ao criar cliente:", error);  // <-- aqui imprime o erro
+      console.error("Erro ao criar cliente:", error); 
       return new ResponseTemplateModel(false, 500, "Erro ao criar cliente", []);
     }
   }
@@ -155,25 +155,21 @@ export class PrismaUserRepository {
 
   async find(criteria: any): Promise<ResponseTemplateInterface> {
     try {
+      const whereClause = typeof criteria === 'string' ? { email: criteria } : criteria;
+  
       const response = await prisma.user.findMany({
-        where: criteria,
+        where: whereClause,
       });
+  
       if (!response || response.length === 0) {
-        throw new Error("Clientes não encontrados na base");
+        return new ResponseTemplateModel(false, 404, "Clientes não encontrados na base", []);
       }
-      return new ResponseTemplateModel(
-        true,
-        200,
-        "Clientes encontrados com sucesso",
-        response
-      );
+  
+      return new ResponseTemplateModel(true, 200, "Clientes encontrados com sucesso", response);
+  
     } catch (error) {
-      return new ResponseTemplateModel(
-        false,
-        401,
-        "Clientes não encontrados na base",
-        error
-      );
+      console.error("Erro ao buscar clientes:", error);
+      return new ResponseTemplateModel(false, 500, "Erro interno ao buscar clientes", []);
     }
   }
 }

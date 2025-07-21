@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from "axios";
 import { IRegisterFormData } from "../interfaces/register-interface";
+import { ILoginFormData, LoginResponse } from "../interfaces/login-interface";
 
-const apiBaseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4001/api";
+const apiBaseURL = "http://localhost:4001/api";
 
 export class ApiService {
   private api: AxiosInstance;
@@ -20,6 +21,21 @@ export class ApiService {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw error.response?.data || error.message || "Erro ao registrar usuário";
+      }
+      if (error instanceof Error) {
+        throw error.message;
+      }
+      throw "Erro desconhecido";
+    }
+  }
+  
+  async loginUser(data: ILoginFormData): Promise<LoginResponse> {
+    try {
+      const response = await this.api.post("/user/login", data);
+      return response.data as LoginResponse;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw error.response?.data || error.message || "Erro ao autenticar usuário";
       }
       if (error instanceof Error) {
         throw error.message;

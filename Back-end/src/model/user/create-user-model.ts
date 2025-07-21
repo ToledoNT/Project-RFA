@@ -13,7 +13,7 @@ export class CreateUserModel {
   password: string;
   acesstokenApi: string;
   resetToken: string;
-  resetTokenExpiresAt: string;
+  resetTokenExpiresAt?: Date;  // muda para Date opcional
 
   constructor(data: Partial<CreateUserModel>) {
     this.name = data.name ?? '';
@@ -30,6 +30,14 @@ export class CreateUserModel {
     this.password = data.password ?? '';
     this.acesstokenApi = data.acesstokenApi ?? '';
     this.resetToken = data.resetToken ?? '';
-    this.resetTokenExpiresAt = data.resetTokenExpiresAt ?? '';
+    
+    if (data.resetTokenExpiresAt) {
+      this.resetTokenExpiresAt = new Date(data.resetTokenExpiresAt);
+      if (isNaN(this.resetTokenExpiresAt.getTime())) {
+        this.resetTokenExpiresAt = undefined;
+      }
+    } else {
+      this.resetTokenExpiresAt = undefined;
+    }
   }
 }

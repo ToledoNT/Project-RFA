@@ -5,7 +5,6 @@ import { JwtHelper } from "../../helpers/token-client-generator";
 
 export class CreateUserController {
   async handle(req: Request, res: Response): Promise<void> {
-    try {
       const { email } = req.body;
 
       const emailToken = await JwtHelper.generateEmailToken({ email });
@@ -18,12 +17,11 @@ export class CreateUserController {
       };
 
       const createUserModel = new CreateUserModel(userData);
+      if(createUserModel) { 
+        
+      }
       const createdUser = await new CreateUser().execute(createUserModel);
 
       res.status(createdUser.code).send(createdUser);
-    } catch (error) {
-      console.error("Erro ao criar usuário:", error);
-      res.status(500).send({ message: "Erro interno no servidor" });
-    }
+    } 
   }
-}

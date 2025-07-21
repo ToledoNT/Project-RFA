@@ -3,7 +3,7 @@ import { IResponseCliente } from "../../interfaces/responses/response-cliente-in
 import { ResponseClienteModel } from "../../model/responses/response-cliente-model";
 import { CreateLog } from "../logs/create-log";
 
-export class FetchCliente {
+export class FetchUser {
   async execute(criteria: any): Promise<IResponseCliente> {
     const response = await new PrismaUserRepository().find(criteria);
     if (!response.status) {

@@ -4,6 +4,7 @@ import { UpdateClienteController } from "../controller/user/update-user-controll
 import { DeleteUserController } from "../controller/user/delete-user-controller";
 import { GetAllUsersController } from "../controller/user/get-users-controller";
 import { ClienteMiddleware } from "../middleware/cliente-middleware";
+import { LoginUserController } from "../controller/user/login-user-controller";
 
 const router: Router = express.Router();
 
@@ -15,6 +16,12 @@ router.post(
     "/user/register",
     new ClienteMiddleware().handle.bind(new ClienteMiddleware()),
     new CreateUserController().handle.bind(new CreateUserController())
+  );
+
+  router.post(
+    "/user/login",
+    // new ClienteMiddleware().handle.bind(new ClienteMiddleware()),
+    new LoginUserController().handle.bind(new LoginUserController())
   );
 
 router.put("/user/update", updateClienteController.handle.bind(updateClienteController));
