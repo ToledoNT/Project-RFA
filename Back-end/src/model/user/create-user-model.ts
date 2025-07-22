@@ -13,7 +13,7 @@ export class CreateUserModel {
   password: string;
   acesstokenApi: string;
   resetToken: string;
-  resetTokenExpiresAt?: Date;  // muda para Date opcional
+  resetTokenExpiresAt?: Date;  
 
   constructor(data: Partial<CreateUserModel>) {
     this.name = data.name ?? '';
