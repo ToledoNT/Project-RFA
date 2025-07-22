@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Footer from "../components/footer";
 import Menu from "../components/menu-home";
 import RifasPainel from "../components/rifa-card";
+import { ApiService } from "../api/api-requests";
 
 export default function HomePage() {
   const router = useRouter();
@@ -16,27 +17,40 @@ export default function HomePage() {
   const [mostrarPainel, setMostrarPainel] = useState(false);
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem("loggedIn");
-    const storedUsername = localStorage.getItem("username");
+    const fetchData = async () => {
+      const loggedIn = localStorage.getItem("loggedIn");
+      const storedUsername = localStorage.getItem("username");
 
-    if (!loggedIn) {
-      router.push("/login");
-      return;
-    }
+      if (!loggedIn) {
+        router.push("/login");
+        return;
+      }
 
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
+      if (storedUsername) setUsername(storedUsername);
 
-    setLoading(false);
+      try {
+        const apiService = new ApiService();
+        const response = await apiService.rifaNumbers({
+          email: storedUsername || "",
+        });
 
-    //Chamar numeros de Rifas direto do backend
-    setRifasDisponiveis(Array.from({ length: 100 }, (_, i) => i + 1));
+        if (response?.numerosDisponiveis) {
+          setRifasDisponiveis(response.numerosDisponiveis);
+        } else {
+          alert("Não foi possível carregar as rifas.");
+        }
+      } catch (err) {
+        console.error("Erro ao buscar rifas:", err);
+        alert("Erro ao buscar rifas disponíveis.");
+      }
 
-    const compradas = localStorage.getItem("rifasCompradas");
-    if (compradas) {
-      setRifasCompradas(JSON.parse(compradas));
-    }
+      const compradas = localStorage.getItem("rifasCompradas");
+      if (compradas) setRifasCompradas(JSON.parse(compradas));
+
+      setLoading(false);
+    };
+
+    fetchData();
   }, [router]);
 
   const comprarRifa = (numero: number) => {
@@ -63,7 +77,6 @@ export default function HomePage() {
     <div className="min-h-screen flex flex-col bg-black text-white relative">
       <Menu />
 
-      {/* Saudação fixa no canto superior esquerdo, mais pra baixo */}
       <div className="absolute top-16 left-6 text-white text-sm z-50 select-none">
         Olá, <span className="font-bold">{username}</span> 👋
       </div>

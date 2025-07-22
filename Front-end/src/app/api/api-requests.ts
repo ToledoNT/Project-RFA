@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { IRegisterFormData } from "../interfaces/register-interface";
 import { ILoginFormData, LoginResponse } from "../interfaces/login-interface";
+import { IsearchRaffle, RifaNumbersResponse } from "../interfaces/home-interface";
 
 const apiBaseURL = "http://localhost:4001/api";
 
@@ -33,6 +34,21 @@ export class ApiService {
     try {
       const response = await this.api.post("/user/login", data);
       return response.data as LoginResponse;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw error.response?.data || error.message || "Erro ao autenticar usuário";
+      }
+      if (error instanceof Error) {
+        throw error.message;
+      }
+      throw "Erro desconhecido";
+    }
+  }
+  
+  async rifaNumbers(data: IsearchRaffle): Promise<RifaNumbersResponse> {
+    try {
+      const response = await this.api.post("/rfa/numbers", data);
+      return response.data as RifaNumbersResponse;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw error.response?.data || error.message || "Erro ao autenticar usuário";
