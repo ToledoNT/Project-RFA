@@ -24,6 +24,12 @@ router.post(
     new LoginUserController().handle.bind(new LoginUserController())
   );
 
+
+router.get(
+  "/rfa/numbers"),
+  // new LoginMiddleware().handle.bind(new LoginMiddleware()),
+  new LoginUserController().handle.bind(new LoginUserController())
+
 router.put("/user/update", updateClienteController.handle.bind(updateClienteController));
 router.delete("/user/delete", deleteUserController.handle.bind(deleteUserController));
 router.get("/user/allusers", getAllUsersController.handle.bind(getAllUsersController));
