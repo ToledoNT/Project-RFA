@@ -82,6 +82,52 @@ export class LoginMiddleware {
     next();
   }
 }
+
+
+  export class GetUsersMiddleware {
+  async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const token = req.headers.authorization;
+
+    if (!token) {
+      res.status(401).json({ message: "Token não fornecido." });
+      return;
+    }
+
+      // Aqui você pode adicionar a lógica real de verificação do token
+      // Ex: const decoded = jwt.verify(token, secret);
+      // req.user = decoded;
+
+      console.log("Token recebido:", token); // Apenas log de exemplo
+      next();
+    } 
+  }
+
+  export class EmailHeaderMiddleware {
+  handle(req: Request, res: Response, next: NextFunction): void {
+    const email = req.headers["x-user-email"];
+
+    if (!email || typeof email !== "string") {
+      res.status(400).json({ erro: "E-mail não encontrado no header" });
+      return;
+    }
+
+    req.body.email = email;
+    next();
+  }
+}
+  export class DeleteUserMiddleware {
+  async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { id, email } = req.body;
+
+    if (!id && !email) {
+      res.status(400).json({ erro: "Você deve informar o ID ou o e-mail do usuário." });
+      return;
+    }
+
+    next();
+  }
+}
+
   //   const headerValited = new FieldsValidator().execute(req.headers, [
   //     "access-token",
   //   ]);
@@ -130,4 +176,3 @@ export class LoginMiddleware {
 
   //   next();
   // }
-
