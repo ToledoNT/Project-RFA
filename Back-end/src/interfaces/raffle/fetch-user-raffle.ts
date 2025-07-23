@@ -6,6 +6,6 @@ export interface IFetchRaffle {
   number: number;
   status: RaffleStatus;
   buyerId?: string | null;
-  buyer?: IFetchCliente | null;
+  buyer?: IFetchCliente | null;  
   purchaseDate?: Date | null;
 }
