@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { CreateRaffleModel } from "../../model/Raffle/create-raffle-model";
 import { CreateRaffle } from "../../use-cases/raffle/create-raffle-use-cases";
-import { FetchAllRaffles } from "../../use-cases/raffle/fetch-raffle-use-cases";
+import { FetchAllRaffles } from "../../use-cases/raffle/fetch-all-raffles-use-case";
 
 export class CreateRaffleController {
   async handle(req: Request, res: Response): Promise<void> {
@@ -27,7 +27,6 @@ export class CreateRaffleController {
       }
       current++;
     }
-
     res.status(201).json({ success: true, data: createdRaffles });
   }
 }

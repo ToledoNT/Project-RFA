@@ -1,17 +1,10 @@
-
-  export interface RifaButtonProps {
+export interface RifaButtonProps {
     numero: number;
     comprado: boolean;
     onClick: () => void;
   }
-
-
-export interface RifasPainelProps {
-  rifasDisponiveis: number[];
-  rifasCompradas: number[];
-  mostrarDisponiveis: boolean;
-  setMostrarDisponiveis: (mostrar: boolean) => void;
-  comprarRifa: (numero: number) => void;
+export interface IsearchRaffle {
+  email: string;
 }
 
 export interface RifaNumbersResponse {
@@ -19,6 +12,16 @@ export interface RifaNumbersResponse {
   numerosComprados: number[];
 }
 
-export interface IsearchRaffle {
-  email: string;
+export interface Rifa {
+  id: string;
+  number: number;
+  status: string;
+}
+
+export interface RifasPainelProps {
+  rifasDisponiveis: Rifa[];
+  rifasCompradas: number[];
+  mostrarDisponiveis: boolean;
+  setMostrarDisponiveis: (mostrar: boolean) => void;
+  comprarRifa: (numero: number) => void;
 }

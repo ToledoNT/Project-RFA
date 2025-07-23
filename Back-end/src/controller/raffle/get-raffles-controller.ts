@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { FetchRaffleModel } from "../../model/Raffle/fetch-raffle-model";
-import { FetchAllRaffles } from "../../use-cases/raffle/fetch-raffle-use-cases";
+import { FetchAllRaffles } from "../../use-cases/raffle/fetch-all-raffles-use-case";
 
 export class GetAllRafflesController {
   handle = async (req: Request, res: Response): Promise<void> => {

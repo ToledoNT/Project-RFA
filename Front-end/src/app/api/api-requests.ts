@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { IRegisterFormData } from "../interfaces/register-interface";
 import { ILoginFormData, LoginResponse } from "../interfaces/login-interface";
-import { IsearchRaffle, RifaNumbersResponse } from "../interfaces/home-interface";
+import { IsearchRaffle, Rifa, RifaNumbersResponse } from "../interfaces/home-interface";
 
 const apiBaseURL = "http://localhost:4001/api";
 
@@ -45,10 +45,11 @@ export class ApiService {
     }
   }
   
-  async rifaNumbers(data: IsearchRaffle): Promise<RifaNumbersResponse> {
+  async rifaNumbers(): Promise<Rifa[]> {
     try {
-      const response = await this.api.post("/rfa/numbers", data);
-      return response.data as RifaNumbersResponse;
+      const response = await this.api.get("/rfa/numbers");
+      console.log(response);
+      return response.data.data as Rifa[];
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw error.response?.data || error.message || "Erro ao autenticar usuário";
@@ -59,4 +60,19 @@ export class ApiService {
       throw "Erro desconhecido";
     }
   }
-}
+    async getUser(): Promise<Rifa[]> {
+      try {
+        const response = await this.api.get("/rfa/numbers");
+        console.log(response);
+        return response.data.data as Rifa[];
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          throw error.response?.data || error.message || "Erro ao autenticar usuário";
+        }
+        if (error instanceof Error) {
+          throw error.message;
+        }
+        throw "Erro desconhecido";
+      }
+  
+}}

@@ -6,49 +6,65 @@ import Footer from "../components/footer";
 import Menu from "../components/menu-home";
 import RifasPainel from "../components/rifa-card";
 import { ApiService } from "../api/api-requests";
+import { Rifa } from "../interfaces/home-interface";
 
 export default function HomePage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
-  const [rifasDisponiveis, setRifasDisponiveis] = useState<number[]>([]);
+  const [rifasDisponiveis, setRifasDisponiveis] = useState<Rifa[]>([]);
   const [rifasCompradas, setRifasCompradas] = useState<number[]>([]);
   const [mostrarDisponiveis, setMostrarDisponiveis] = useState(true);
   const [mostrarPainel, setMostrarPainel] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    async function fetchData() {
       const loggedIn = localStorage.getItem("loggedIn");
-      const storedUsername = localStorage.getItem("username");
 
       if (!loggedIn) {
         router.push("/login");
         return;
       }
 
-      if (storedUsername) setUsername(storedUsername);
+      const userDataString = localStorage.getItem("userData");
+      if (userDataString) {
+        try {
+          const userData = JSON.parse(userDataString);
+          const nomeCompleto = userData.name
+            ? userData.surname
+              ? `${userData.name} ${userData.surname}`
+              : userData.name
+            : "";
+          setUsername(nomeCompleto);
+        } catch {
+          setUsername("");
+        }
+      }
 
       try {
         const apiService = new ApiService();
-        const response = await apiService.rifaNumbers({
-          email: storedUsername || "",
-        });
+        const rifas = await apiService.rifaNumbers();
 
-        if (response?.numerosDisponiveis) {
-          setRifasDisponiveis(response.numerosDisponiveis);
+        if (Array.isArray(rifas)) {
+          const numerosFormatados = rifas.map((rifa) => ({
+            ...rifa,
+            status: rifa.status === "AVAILABLE" ? "Disponível" : rifa.status,
+          }));
+
+          setRifasDisponiveis(numerosFormatados);
         } else {
-          alert("Não foi possível carregar as rifas.");
+          alert("Não foi possível carregar as rifas disponíveis.");
         }
+
+        const compradas = localStorage.getItem("rifasCompradas");
+        if (compradas) setRifasCompradas(JSON.parse(compradas));
       } catch (err) {
         console.error("Erro ao buscar rifas:", err);
-        alert("Erro ao buscar rifas disponíveis.");
+        alert("Erro ao buscar rifas.");
       }
 
-      const compradas = localStorage.getItem("rifasCompradas");
-      if (compradas) setRifasCompradas(JSON.parse(compradas));
-
       setLoading(false);
-    };
+    }
 
     fetchData();
   }, [router]);

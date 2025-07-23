@@ -2,11 +2,13 @@ import express, { Router } from "express";
 import { LoginUserController } from "../controller/user/login-user-controller";
 import { CreateRaffleController } from "../controller/raffle/create-raffle-controller";
 import { GetAllRafflesController } from "../controller/raffle/get-raffles-controller";
+import { BuyRaffleController } from "../controller/raffle/buy-raffle-controller";
 
 const router: Router = express.Router();
 
 const createRaffleController = new CreateRaffleController();
 const getAllRafflesController = new GetAllRafflesController();
+const buyRaffleController = new BuyRaffleController
 
 
 router.post(
@@ -21,4 +23,9 @@ router.get(
   getAllRafflesController.handle.bind(getAllRafflesController)
 );
 
+router.put(
+  "/rfa/buynumber",
+  // new LoginMiddleware().handle.bind(new LoginMiddleware()),
+  buyRaffleController.handle.bind(buyRaffleController)
+);
 export default router;

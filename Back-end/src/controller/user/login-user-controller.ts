@@ -34,7 +34,8 @@ export class LoginUserController {
         isEmailConfirmed: user.isEmailConfirmed,
         name: user.name,
         lastname: user.lastname,
+        }
       }
-    });
-    }
+    );
   }
+}

@@ -39,5 +39,32 @@ export class PrismaRaffleRepository {
         error
       );
     }
+    
+  }
+  async findRaffleById(id: string): Promise<ResponseTemplateInterface> {
+    try {
+      const response = await prisma.raffle.findUnique({
+        where: { id },
+      });
+  
+      if (!response) {
+        return new ResponseTemplateModel(false, 404, "Rifa não encontrada", null);
+      }
+  
+      return new ResponseTemplateModel(
+        true,
+        200,
+        "Rifa consultada com sucesso",
+        response
+      );
+    } catch (error) {
+      console.error("Erro ao consultar rifa:", error);
+      return new ResponseTemplateModel(
+        false,
+        500,
+        "Erro ao consultar rifa",
+        error
+      );
+    }
   }
 }

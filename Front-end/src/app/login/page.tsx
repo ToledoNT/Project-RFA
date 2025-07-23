@@ -30,17 +30,18 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validate()) return;
-
     setIsSubmitting(true);
-
     try {
       const response = await apiService.loginUser({ email, password: senha });
-
       if (response.success) {
         if (response.user?.isEmailConfirmed) {
           localStorage.setItem("loggedIn", "true");
+  
+          if (response.user) {
+            localStorage.setItem("userData", JSON.stringify(response.user));
+          }
+  
           await router.push("/home");
         } else {
           alert("Por favor, confirme seu e-mail antes de fazer login.");
@@ -58,7 +59,7 @@ export default function LoginPage() {
       setIsSubmitting(false);
     }
   };
-
+  
   return (
     <div className="min-h-screen flex flex-col justify-between bg-black px-4">
       <div className="flex-grow flex items-center justify-center">

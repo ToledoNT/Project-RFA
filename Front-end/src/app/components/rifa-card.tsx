@@ -64,13 +64,13 @@ export default function RifasPainel({
           aria-label="Lista de rifas disponíveis"
         >
           {rifasDisponiveis
-            .filter((num) => !rifasCompradas.includes(num))
-            .map((num) => (
+            .filter((rifa) => !rifasCompradas.includes(rifa.number))
+            .map((rifa) => (
               <RifaButton
-                key={num}
-                numero={num}
+                key={rifa.id}
+                numero={rifa.number}
                 comprado={false}
-                onClick={() => comprarRifa(num)}
+                onClick={() => comprarRifa(rifa.number)}
               />
             ))}
         </div>
