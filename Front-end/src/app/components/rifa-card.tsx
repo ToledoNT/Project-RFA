@@ -20,14 +20,14 @@ export default function RifasPainel({
           <FaTicketAlt className="text-blue-500" />
           {mostrarDisponiveis ? "Números Disponíveis" : "Números Comprados"}
         </h3>
-        <div className="text-gray-400 text-sm">
+        <div className="text-gray-400 text-sm select-none">
           {mostrarDisponiveis
             ? `${rifasDisponiveis.length - rifasCompradas.length} números disponíveis`
             : `${rifasCompradas.length} números comprados`}
         </div>
       </header>
 
-      {/* Botões de toggle */}
+      {/* Botões para alternar entre disponíveis e comprados */}
       <div className="flex gap-4 mb-6 justify-center sm:justify-start">
         <button
           onClick={() => setMostrarDisponiveis(true)}
@@ -39,7 +39,8 @@ export default function RifasPainel({
                 : "bg-gray-700 text-gray-300 hover:bg-gray-600"
             }`}
         >
-          <FaTicketAlt /> Disponíveis
+          <FaTicketAlt />
+          Disponíveis
         </button>
         <button
           onClick={() => setMostrarDisponiveis(false)}
@@ -51,17 +52,18 @@ export default function RifasPainel({
                 : "bg-gray-700 text-gray-300 hover:bg-gray-600"
             }`}
         >
-          <FaCheckCircle /> Comprados
+          <FaCheckCircle />
+          Comprados
         </button>
       </div>
 
-      {/* Lista de rifas */}
+      {/* Lista das rifas disponíveis ou compradas */}
       {mostrarDisponiveis ? (
         <div
-          className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 gap-4 max-h-[450px] overflow-y-auto pr-2
-          scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-900"
           role="list"
           aria-label="Lista de rifas disponíveis"
+          className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 gap-4 max-h-[450px] overflow-y-auto pr-2
+            scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-900"
         >
           {rifasDisponiveis
             .filter((rifa) => !rifasCompradas.includes(rifa.number))
@@ -80,16 +82,16 @@ export default function RifasPainel({
         </p>
       ) : (
         <ul
-          className="flex flex-wrap gap-4 justify-center sm:justify-start"
           role="list"
           aria-label="Lista de rifas compradas"
+          className="flex flex-wrap gap-4 justify-center sm:justify-start"
         >
           {rifasCompradas.map((num) => (
             <li
               key={num}
-              className="px-8 py-4 bg-green-600 rounded-full font-semibold select-none shadow-md text-lg
-              flex items-center gap-2"
               aria-label={`Rifa número ${num} comprada`}
+              className="px-8 py-4 bg-green-600 rounded-full font-semibold select-none shadow-md text-lg
+                flex items-center gap-2"
             >
               <FaCheckCircle />
               {num}

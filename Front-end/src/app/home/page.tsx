@@ -10,8 +10,11 @@ import { Rifa } from "../interfaces/home-interface";
 
 export default function HomePage() {
   const router = useRouter();
+
+  // Estados principais
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); // Guarda email do usuário
   const [rifasDisponiveis, setRifasDisponiveis] = useState<Rifa[]>([]);
   const [rifasCompradas, setRifasCompradas] = useState<number[]>([]);
   const [mostrarDisponiveis, setMostrarDisponiveis] = useState(true);
@@ -19,13 +22,14 @@ export default function HomePage() {
 
   useEffect(() => {
     async function fetchData() {
+      // Verifica autenticação
       const loggedIn = localStorage.getItem("loggedIn");
-
       if (!loggedIn) {
         router.push("/login");
         return;
       }
 
+      // Pega dados do usuário
       const userDataString = localStorage.getItem("userData");
       if (userDataString) {
         try {
@@ -36,11 +40,14 @@ export default function HomePage() {
               : userData.name
             : "";
           setUsername(nomeCompleto);
+          setEmail(userData.email || "");
         } catch {
           setUsername("");
+          setEmail("");
         }
       }
 
+      // Busca rifas disponíveis
       try {
         const apiService = new ApiService();
         const rifas = await apiService.rifaNumbers();
@@ -56,6 +63,7 @@ export default function HomePage() {
           alert("Não foi possível carregar as rifas disponíveis.");
         }
 
+        // Busca rifas compradas do localStorage
         const compradas = localStorage.getItem("rifasCompradas");
         if (compradas) setRifasCompradas(JSON.parse(compradas));
       } catch (err) {
@@ -69,18 +77,41 @@ export default function HomePage() {
     fetchData();
   }, [router]);
 
-  const comprarRifa = (numero: number) => {
+  const comprarRifa = async (numero: number) => {
     if (rifasCompradas.includes(numero)) {
       alert("Você já comprou essa rifa.");
       return;
     }
-
-    const novasCompras = [...rifasCompradas, numero];
-    setRifasCompradas(novasCompras);
-    localStorage.setItem("rifasCompradas", JSON.stringify(novasCompras));
-    alert(`Você comprou a rifa número ${numero}!`);
+  
+    if (!email) {
+      alert("Usuário não autenticado.");
+      return;
+    }
+  
+    // Busca o objeto rifa pelo número
+    const rifaSelecionada = rifasDisponiveis.find(rifa => rifa.number === numero);
+    if (!rifaSelecionada) {
+      alert("Rifa não encontrada.");
+      return;
+    }
+  
+    try {
+      const apiService = new ApiService();
+      // Passa o id (string) e o email
+      await apiService.buyNumber(rifaSelecionada.id, email);
+  
+      const novasCompras = [...rifasCompradas, numero];
+      setRifasCompradas(novasCompras);
+      localStorage.setItem("rifasCompradas", JSON.stringify(novasCompras));
+  
+      alert(`Você comprou a rifa número ${numero}!`);
+    } catch (error) {
+      console.error("Erro ao comprar rifa:", error);
+      alert("Não foi possível comprar a rifa. Tente novamente.");
+    }
   };
-
+  
+  // Loading
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black px-6">

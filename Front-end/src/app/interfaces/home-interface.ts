@@ -25,3 +25,8 @@ export interface RifasPainelProps {
   setMostrarDisponiveis: (mostrar: boolean) => void;
   comprarRifa: (numero: number) => void;
 }
+
+export interface RifaBuyUserRaflle { 
+id: string
+email: string
+}

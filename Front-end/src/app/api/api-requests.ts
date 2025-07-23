@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { IRegisterFormData } from "../interfaces/register-interface";
 import { ILoginFormData, LoginResponse } from "../interfaces/login-interface";
-import { IsearchRaffle, Rifa, RifaNumbersResponse } from "../interfaces/home-interface";
+import { IsearchRaffle, Rifa, RifaBuyUserRaflle, RifaNumbersResponse } from "../interfaces/home-interface";
 
 const apiBaseURL = "http://localhost:4001/api";
 
@@ -74,5 +74,19 @@ export class ApiService {
         }
         throw "Erro desconhecido";
       }
-  
-}}
+    }
+    async buyNumber(id: string, email: string): Promise<unknown> {
+      try {
+        console.log(id,email);
+
+        const response = await this.api.put('/rfa/buynumber', { id, email });
+        console.log(response);
+        return response.data;
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          throw error.message;
+        }
+        throw "Erro desconhecido";
+      }
+    }
+  }
