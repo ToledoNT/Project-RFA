@@ -9,6 +9,7 @@ const apiService = new ApiService();
 
 export default function LoginPage() {
   const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [errors, setErrors] = useState<{ email?: string; senha?: string }>({});
@@ -17,31 +18,40 @@ export default function LoginPage() {
   const validate = () => {
     const newErrors: { email?: string; senha?: string } = {};
 
-    if (!email) newErrors.email = "O e-mail é obrigatório";
-    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Formato de e-mail inválido";
+    if (!email) {
+      newErrors.email = "O e-mail é obrigatório";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Formato de e-mail inválido";
+    }
 
-    if (!senha) newErrors.senha = "A senha é obrigatória";
-    else if (senha.length < 6) newErrors.senha = "A senha precisa ter ao menos 6 caracteres";
+    if (!senha) {
+      newErrors.senha = "A senha é obrigatória";
+    } else if (senha.length < 6) {
+      newErrors.senha = "A senha precisa ter ao menos 6 caracteres";
+    }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+
     setIsSubmitting(true);
+
     try {
       const response = await apiService.loginUser({ email, password: senha });
+
       if (response.success) {
         if (response.user?.isEmailConfirmed) {
           localStorage.setItem("loggedIn", "true");
-  
+
           if (response.user) {
             localStorage.setItem("userData", JSON.stringify(response.user));
+            localStorage.setItem("email", response.user.email);
           }
-  
+
           await router.push("/home");
         } else {
           alert("Por favor, confirme seu e-mail antes de fazer login.");
@@ -59,7 +69,7 @@ export default function LoginPage() {
       setIsSubmitting(false);
     }
   };
-  
+
   return (
     <div className="min-h-screen flex flex-col justify-between bg-black px-4">
       <div className="flex-grow flex items-center justify-center">
@@ -67,6 +77,7 @@ export default function LoginPage() {
           <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-8 drop-shadow-md">
             Login
           </h1>
+
           <form className="space-y-6" onSubmit={handleLogin} noValidate>
             <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
@@ -138,6 +149,7 @@ export default function LoginPage() {
           </form>
         </div>
       </div>
+
       <Footer />
     </div>
   );

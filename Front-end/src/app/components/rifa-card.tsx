@@ -14,7 +14,6 @@ export default function RifasPainel({
 }: RifasPainelProps) {
   return (
     <>
-      {/* Cabeçalho do painel */}
       <header className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
         <h3 className="text-xl font-semibold flex items-center gap-2">
           <FaTicketAlt className="text-blue-500" />
@@ -27,7 +26,6 @@ export default function RifasPainel({
         </div>
       </header>
 
-      {/* Botões para alternar entre disponíveis e comprados */}
       <div className="flex gap-4 mb-6 justify-center sm:justify-start">
         <button
           onClick={() => setMostrarDisponiveis(true)}
@@ -57,7 +55,6 @@ export default function RifasPainel({
         </button>
       </div>
 
-      {/* Lista das rifas disponíveis ou compradas */}
       {mostrarDisponiveis ? (
         <div
           role="list"
@@ -65,16 +62,22 @@ export default function RifasPainel({
           className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 gap-4 max-h-[450px] overflow-y-auto pr-2
             scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-900"
         >
-          {rifasDisponiveis
-            .filter((rifa) => !rifasCompradas.includes(rifa.number))
-            .map((rifa) => (
+          {rifasDisponiveis.map((rifa) => {
+            const isPurchased = rifa.status === "PURCHASED"; // indisponível pra todo mundo
+            const isCompradaPorUsuario = rifasCompradas.includes(rifa.number);
+
+            return (
               <RifaButton
                 key={rifa.id}
                 numero={rifa.number}
-                comprado={false}
-                onClick={() => comprarRifa(rifa.number)}
+                comprado={isCompradaPorUsuario}
+                disabled={isPurchased}
+                onClick={() => {
+                  if (!isPurchased) comprarRifa(rifa.number);
+                }}
               />
-            ))}
+            );
+          })}
         </div>
       ) : rifasCompradas.length === 0 ? (
         <p className="text-center text-gray-400 select-none mt-10 text-lg">

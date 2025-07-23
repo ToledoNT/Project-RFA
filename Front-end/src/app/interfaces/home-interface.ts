@@ -1,8 +1,3 @@
-export interface RifaButtonProps {
-    numero: number;
-    comprado: boolean;
-    onClick: () => void;
-  }
 export interface IsearchRaffle {
   email: string;
 }
@@ -30,3 +25,22 @@ export interface RifaBuyUserRaflle {
 id: string
 email: string
 }
+
+export interface UserRaffleResponse {
+  success: boolean;
+  data: {
+    user: {
+      id: string;
+      name: string;
+      email: string;
+    };
+    raffles: Rifa[];
+  };
+}
+
+export type RifaButtonProps = {
+  numero: number;
+  comprado: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+};

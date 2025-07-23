@@ -1,31 +1,29 @@
-"use client";
 import { RifaButtonProps } from "@/app/interfaces/home-interface";
-import { memo } from "react";
+export default function RifaButton({
+  numero,
+  comprado,
+  disabled,
+  onClick,
+}: RifaButtonProps) {
+  const baseClasses = "p-3 rounded text-center font-bold transition w-full";
 
-const RifaButtonComponent = ({ numero, comprado, onClick }: RifaButtonProps) => (
-  <button
-    type="button"
-    disabled={comprado}
-    onClick={onClick}
-    className={`w-full py-3 rounded-full font-semibold transition select-none
-      focus:outline-none focus:ring-2 focus:ring-blue-500
-      ${
-        comprado
-          ? "bg-gray-800 cursor-not-allowed text-gray-600"
-          : "bg-blue-600 hover:bg-blue-700 text-white"
-      }`}
-    aria-disabled={comprado}
-    aria-label={
-      comprado
-        ? `Rifa número ${numero} comprada`
-        : `Comprar rifa número ${numero}`
-    }
-  >
-    {numero}
-  </button>
-);
+  let styleClasses = "";
 
-const RifaButton = memo(RifaButtonComponent);
-RifaButton.displayName = "RifaButton";
+  if (disabled) {
+    styleClasses = "bg-gray-900 text-gray-600 cursor-not-allowed";
+  } else if (comprado) {
+    styleClasses = "bg-blue-700 text-white cursor-not-allowed";
+  } else {
+    styleClasses = "bg-green-600 text-white hover:bg-green-700 cursor-pointer";
+  }
 
-export default RifaButton;
+  return (
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      className={`${baseClasses} ${styleClasses}`}
+    >
+      {numero}
+    </button>
+  );
+}
