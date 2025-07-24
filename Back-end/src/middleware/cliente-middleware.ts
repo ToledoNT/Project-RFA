@@ -2,7 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { BcryptPass } from "../helpers/bcrypt-generator";
 import { FieldsValidator } from "../helpers/fields-validator";
 import { isValidEmail } from "../helpers/email-validator";
+import jwt from "jsonwebtoken";
 
+// Middleware para validar criação de cliente
 export class ClienteMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
     const data = req.body;
@@ -29,11 +31,11 @@ export class ClienteMiddleware {
 
       const validationResult = new FieldsValidator().execute(data, requiredFields);
       if (!validationResult.status) {
-        res.status(403).send(validationResult);
+        res.status(403).json(validationResult);
         return;
       }
 
-      if (data.password !== data.confirmPass) {
+      if (data.password !== data.confirmPassword) {
         res.status(400).json({ error: "As senhas não coincidem." });
         return;
       }
@@ -83,31 +85,46 @@ export class LoginMiddleware {
   }
 }
 
-
-  export class GetUsersMiddleware {
+// Middleware para validar token e proteger rotas de usuários
+export class GetUsersMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const token = req.headers.authorization;
+    const authHeader = req.headers.authorization;
 
-    if (!token) {
+    if (!authHeader) {
       res.status(401).json({ message: "Token não fornecido." });
       return;
     }
 
-      // Aqui você pode adicionar a lógica real de verificação do token
-      // Ex: const decoded = jwt.verify(token, secret);
-      // req.user = decoded;
+    const token = authHeader.split(" ")[1];
 
-      console.log("Token recebido:", token); // Apenas log de exemplo
+    if (!token) {
+      res.status(401).json({ message: "Token mal formatado." });
+      return;
+    }
+
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      res.status(500).json({ message: "JWT_SECRET não configurado." });
+      return;
+    }
+
+    try {
+      const decoded = jwt.verify(token, secret);
+      (req as any).user = decoded;
       next();
-    } 
+    } catch (error) {
+      res.status(403).json({ message: "Token inválido ou expirado." });
+    }
   }
+}
 
-  export class EmailHeaderMiddleware {
+// Middleware para extrair email do header "x-user-email" e colocar no body
+export class EmailHeaderMiddleware {
   handle(req: Request, res: Response, next: NextFunction): void {
     const email = req.headers["x-user-email"];
 
     if (!email || typeof email !== "string") {
-      res.status(400).json({ erro: "E-mail não encontrado no header" });
+      res.status(400).json({ error: "E-mail não encontrado no header." });
       return;
     }
 
@@ -115,12 +132,14 @@ export class LoginMiddleware {
     next();
   }
 }
-  export class DeleteUserMiddleware {
+
+// Middleware para validar dados para deletar usuário
+export class DeleteUserMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id, email } = req.body;
 
     if (!id && !email) {
-      res.status(400).json({ erro: "Você deve informar o ID ou o e-mail do usuário." });
+      res.status(400).json({ error: "Você deve informar o ID ou o e-mail do usuário." });
       return;
     }
 
@@ -128,51 +147,29 @@ export class LoginMiddleware {
   }
 }
 
-  //   const headerValited = new FieldsValidator().execute(req.headers, [
-  //     "access-token",
-  //   ]);
-  //   if (!headerValited.status) {
-  //     res.status(403).send(headerValited);
-  //     return;
-  //   }
+export class AuthenticateTokenMiddleware {
+  handle = (req: Request, res: Response, next: NextFunction): void => {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
 
-  //   if (req.originalUrl.includes("/api/clientes/update")) {
-  //     fields.push("email");
-  //   }
+    if (!token) {
+      res.status(401).json({ message: "Token não fornecido." });
+      return;
+    }
 
-  //   const fieldsValited = new FieldsValidator().execute(req.body, fields);
-  //   if (!fieldsValited.status) {
-  //     res.status(403).send(fieldsValited);
-  //     return;
-  //   }
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      res.status(500).json({ message: "JWT_SECRET não configurado." });
+      return;
+    }
 
-  //   // Verifica o token
-  //   const responseToken = await new ConsultToken().execute(req.headers);
-  //   let permission: boolean = false;
-
-  //   if (!responseToken.status) {
-  //     res.status(401).send({
-  //       status: false,
-  //       code: 401,
-  //       message: "Cliente não autorizado",
-  //       data: [],
-  //     });
-  //     return;
-  //   }
-
-  //   if (responseToken.data?.[0]?.permission === "admin") {
-  //     permission = true;
-  //   }
-
-  //   if (!permission) {
-  //     res.status(401).send({
-  //       status: false,
-  //       code: 401,
-  //       message: "Cliente não autorizado",
-  //       data: [],
-  //     });
-  //     return;
-  //   }
-
-  //   next();
-  // }
+    jwt.verify(token, secret, (err, user) => {
+      if (err) {
+        res.status(403).json({ message: "Token inválido ou expirado." });
+        return;
+      }
+      (req as any).user = user;
+      next();
+    });
+  };
+}

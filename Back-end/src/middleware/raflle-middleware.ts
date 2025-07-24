@@ -21,12 +21,6 @@ export class CreateRaffleMiddleware {
 
 export class GetAllRafflesAvailableMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const token = req.headers.authorization;
-
-    if (!token) {
-      res.status(401).json({ error: "Token não fornecido." });
-      return;
-    }
     next();
   }
 }
@@ -59,8 +53,6 @@ export class FindRaffleUserByEmailMiddleware {
       return;
     }
 
-    // Aqui pode adicionar validação extra no formato do email, se desejar
-    // Exemplo simples:
     if (typeof email !== "string" || !email.includes("@")) {
       res.status(400).json({ success: false, message: "Formato de email inválido." });
       return;

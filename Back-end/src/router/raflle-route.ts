@@ -5,6 +5,7 @@ import { GetAllRafflesController } from "../controller/raffle/get-raffles-contro
 import { BuyRaffleController } from "../controller/raffle/buy-raffle-controller";
 import { FindRaflleUserByEmailController } from "../controller/raffle/find-client-raflle-by-email";
 import { BuyRaffleMiddleware, CreateRaffleMiddleware, FindRaffleUserByEmailMiddleware, GetAllRafflesAvailableMiddleware } from "../middleware/raflle-middleware";
+import {  AuthenticateTokenMiddleware } from "../middleware/cliente-middleware";
 
 const router: Router = express.Router();
 
@@ -21,6 +22,7 @@ router.post(
 
 router.get(
   "/rfa/numbers",
+  new AuthenticateTokenMiddleware().handle.bind(new AuthenticateTokenMiddleware()),
   new GetAllRafflesAvailableMiddleware().handle.bind(new GetAllRafflesAvailableMiddleware()),
   getAllRafflesController.handle.bind(getAllRafflesController)
 );
