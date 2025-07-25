@@ -39,7 +39,6 @@ export class UpdateClienteController {
       state: clienteFormatado.state ?? "",
       email: clienteFormatado.email ?? "",
       password: clienteFormatado.password ?? "",
-      acesstokenApi: clienteFormatado.acesstokenApi ?? ""
     };
     const updateUser = await new UpdateUser().execute(dadosParaAtualizar);
     if (updateUser) {

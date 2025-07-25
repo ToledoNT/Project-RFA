@@ -16,6 +16,7 @@ const findRaflleUserByEmailController = new FindRaflleUserByEmailController();
 
 router.post(
   "/rfa/createraffle",
+  new AuthenticateTokenMiddleware().handle.bind(new AuthenticateTokenMiddleware()),
   new CreateRaffleMiddleware().handle.bind(new CreateRaffleMiddleware()),
   createRaffleController.handle.bind(createRaffleController)
 );
@@ -29,11 +30,13 @@ router.get(
 
 router.put(
   "/rfa/buynumber",
+  new AuthenticateTokenMiddleware().handle.bind(new AuthenticateTokenMiddleware()),
   new BuyRaffleMiddleware().handle.bind(new BuyRaffleMiddleware()),
   buyRaffleController.handle.bind(buyRaffleController)
 );
 router.post(
   "/rfa/userpurchase", 
+  new AuthenticateTokenMiddleware().handle.bind(new AuthenticateTokenMiddleware()),
   new FindRaffleUserByEmailMiddleware().handle.bind(new FindRaffleUserByEmailMiddleware()),
   findRaflleUserByEmailController.handle.bind(findRaflleUserByEmailController));
 

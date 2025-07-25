@@ -4,6 +4,7 @@ export interface LoginResponse {
   user?: {
     isEmailConfirmed: boolean;
     email: string;
+    token: string;
   };
 }
 export interface ILoginFormData {

@@ -1,126 +1,140 @@
 "use client";
 import { useState } from "react";
+import { ApiService } from "../api/api-requests";
 
 export default function Configuracoes() {
-  const [email, setEmail] = useState("usuario@email.com");
-  const [telefone, setTelefone] = useState("11999999999");
-
   const [senhaAtual, setSenhaAtual] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
 
-  const handleAlterarEmail = () => {
-    console.log("Novo email:", email);
-    alert("Email atualizado com sucesso!");
-  };
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleAlterarTelefone = () => {
-    console.log("Novo telefone:", telefone);
-    alert("Telefone atualizado com sucesso!");
-  };
+  const api = new ApiService();
 
-  const handleAlterarSenha = (e: React.FormEvent) => {
+  const handleAlterarSenha = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
 
     if (novaSenha !== confirmarSenha) {
-      alert("A nova senha e a confirmação não coincidem.");
+      setError("A nova senha e a confirmação não coincidem.");
       return;
     }
-    
-    alert("Senha atualizada com sucesso!");
+
+    const email = localStorage.getItem("email");
+    if (!email) {
+      setError("Email não encontrado. Faça login novamente.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await api.resetPass(email, senhaAtual, novaSenha);
+      setSuccess("Senha atualizada com sucesso!");
+      setSenhaAtual("");
+      setNovaSenha("");
+      setConfirmarSenha("");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        const msg = err.message.toLowerCase();
+        if (msg.includes("token") || msg.includes("unauthorized") || msg.includes("401")) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("email");
+          alert("Sua sessão expirou. Por favor, faça login novamente.");
+          window.location.href = "/login";
+          return;
+        }
+        setError(err.message);
+      } else {
+        setError("Erro desconhecido ao atualizar a senha");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-black text-white px-6 py-12">
-      <div className="max-w-xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-blue-400">Configurações da Conta</h1>
-        <div className="space-y-8">
-          {/* EMAIL */}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-6">
+      <div className="bg-gray-800/90 rounded-xl shadow-xl max-w-md w-full p-8">
+        <h1 className="text-4xl font-extrabold text-blue-400 mb-4 text-center">
+          Deseja trocar sua senha?
+        </h1>
+        <p className="text-gray-300 mb-8 text-center">
+          Altere sua senha para manter sua conta segura.
+        </p>
+
+        <form onSubmit={handleAlterarSenha} className="space-y-6" noValidate>
           <div>
-            <label className="block text-sm mb-1">Email</label>
+            <label htmlFor="senhaAtual" className="block text-sm font-medium mb-1 text-gray-300">
+              Senha Atual
+            </label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="senhaAtual"
+              type="password"
+              value={senhaAtual}
+              onChange={(e) => setSenhaAtual(e.target.value)}
+              placeholder="Digite sua senha atual"
               required
+              disabled={isSubmitting}
+              autoFocus
+              className={`w-full rounded-md px-4 py-3 bg-gray-900 text-white border ${
+                error ? "border-red-500" : "border-gray-700"
+              } focus:outline-none focus:ring-2 focus:ring-blue-500 transition`}
             />
-            <button
-              onClick={handleAlterarEmail}
-              type="button"
-              className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-full shadow transition-transform active:scale-95"
-            >
-              Alterar Email
-            </button>
           </div>
 
-          {/* TELEFONE */}
           <div>
-            <label className="block text-sm mb-1">Telefone</label>
+            <label htmlFor="novaSenha" className="block text-sm font-medium mb-1 text-gray-300">
+              Nova Senha
+            </label>
             <input
-              type="tel"
-              value={telefone}
-              onChange={(e) => setTelefone(e.target.value)}
-              className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Ex: 11999999999"
-              pattern="[0-9]{11}"
+              id="novaSenha"
+              type="password"
+              value={novaSenha}
+              onChange={(e) => setNovaSenha(e.target.value)}
+              placeholder="Digite a nova senha"
               required
+              disabled={isSubmitting}
+              className={`w-full rounded-md px-4 py-3 bg-gray-900 text-white border ${
+                error ? "border-red-500" : "border-gray-700"
+              } focus:outline-none focus:ring-2 focus:ring-blue-500 transition`}
             />
-            <button
-              onClick={handleAlterarTelefone}
-              type="button"
-              className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-full shadow transition-transform active:scale-95"
-            >
-              Alterar Telefone
-            </button>
           </div>
 
-          {/* SENHA */}
-          <form onSubmit={handleAlterarSenha} className="space-y-6">
-            <div>
-              <label className="block text-sm mb-1">Senha Atual</label>
-              <input
-                type="password"
-                value={senhaAtual}
-                onChange={(e) => setSenhaAtual(e.target.value)}
-                className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Digite sua senha atual"
-                required
-              />
-            </div>
+          <div>
+            <label htmlFor="confirmarSenha" className="block text-sm font-medium mb-1 text-gray-300">
+              Confirmar Nova Senha
+            </label>
+            <input
+              id="confirmarSenha"
+              type="password"
+              value={confirmarSenha}
+              onChange={(e) => setConfirmarSenha(e.target.value)}
+              placeholder="Confirme a nova senha"
+              required
+              disabled={isSubmitting}
+              className={`w-full rounded-md px-4 py-3 bg-gray-900 text-white border ${
+                error ? "border-red-500" : "border-gray-700"
+              } focus:outline-none focus:ring-2 focus:ring-blue-500 transition`}
+            />
+          </div>
 
-            <div>
-              <label className="block text-sm mb-1">Nova Senha</label>
-              <input
-                type="password"
-                value={novaSenha}
-                onChange={(e) => setNovaSenha(e.target.value)}
-                className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Digite a nova senha"
-                required
-              />
-            </div>
+          {error && <p className="text-red-500 text-center text-sm mt-2">{error}</p>}
+          {success && <p className="text-green-500 text-center text-sm mt-2">{success}</p>}
 
-            <div>
-              <label className="block text-sm mb-1">Confirmar Nova Senha</label>
-              <input
-                type="password"
-                value={confirmarSenha}
-                onChange={(e) => setConfirmarSenha(e.target.value)}
-                className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Confirme a nova senha"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full shadow transition-transform active:scale-95"
-            >
-              Alterar Senha
-            </button>
-          </form>
-        </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full py-3 mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold transition-transform active:scale-95 ${
+              isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {isSubmitting ? "Alterando..." : "Alterar Senha"}
+          </button>
+        </form>
       </div>
     </div>
   );

@@ -4,7 +4,6 @@ import { FieldsValidator } from "../helpers/fields-validator";
 import { isValidEmail } from "../helpers/email-validator";
 import jwt from "jsonwebtoken";
 
-// Middleware para validar criação de cliente
 export class ClienteMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
     const data = req.body;
@@ -85,7 +84,6 @@ export class LoginMiddleware {
   }
 }
 
-// Middleware para validar token e proteger rotas de usuários
 export class GetUsersMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
     const authHeader = req.headers.authorization;
@@ -118,7 +116,6 @@ export class GetUsersMiddleware {
   }
 }
 
-// Middleware para extrair email do header "x-user-email" e colocar no body
 export class EmailHeaderMiddleware {
   handle(req: Request, res: Response, next: NextFunction): void {
     const email = req.headers["x-user-email"];
@@ -133,7 +130,6 @@ export class EmailHeaderMiddleware {
   }
 }
 
-// Middleware para validar dados para deletar usuário
 export class DeleteUserMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id, email } = req.body;
@@ -172,4 +168,37 @@ export class AuthenticateTokenMiddleware {
       next();
     });
   };
+}
+
+export class ResetPasswordMiddleware {
+  async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { email, currentpassword, newpassword } = req.body;
+
+    const isResetPass = req.method === "PUT" && req.originalUrl === "/api/user/resetpass";
+
+    if (isResetPass) {
+      if (
+        typeof email !== "string" ||
+        typeof currentpassword !== "string" ||
+        typeof newpassword !== "string"
+      ) {
+        res.status(400).json({
+          success: false,
+          message:
+            "Campos inválidos: email, currentpassword e newpassword devem ser strings.",
+        });
+        return;
+      }
+
+      if (!email.trim() || !currentpassword.trim() || !newpassword.trim()) {
+        res.status(400).json({
+          success: false,
+          message: "Campos obrigatórios não podem ser vazios.",
+        });
+        return;
+      }
+    }
+
+    next();
+  }
 }

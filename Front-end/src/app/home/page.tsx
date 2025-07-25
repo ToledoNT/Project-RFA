@@ -51,7 +51,7 @@ export default function HomePage() {
       setLoading(true);
 
       try {
-        const apiService = new ApiService();
+        const apiService = new ApiService(); 
 
         const rifas = await apiService.rifaNumbers();
         if (Array.isArray(rifas)) {
@@ -69,14 +69,18 @@ export default function HomePage() {
         }
       } catch (err) {
         console.error("Erro ao buscar rifas:", err);
-        alert("Erro ao buscar rifas.");
+        localStorage.removeItem("loggedIn");
+        localStorage.removeItem("userData");
+        localStorage.removeItem("token");
+        router.push("/login");
+        alert("Sua sessão expirou, faça login novamente.");
       } finally {
         setLoading(false);
       }
     }
 
     fetchData();
-  }, [email]);
+  }, [email, router]);
 
   const comprarRifa = async (numero: number) => {
     const rifaSelecionada = rifasDisponiveis.find((r) => r.number === numero);

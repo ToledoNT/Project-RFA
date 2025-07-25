@@ -20,13 +20,7 @@ export class ApiService {
       const response = await this.api.post("/user/register", data);
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || error.message || "Erro ao registrar usuário");
-      }
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("Erro desconhecido");
+      this.handleError(error, "Erro ao registrar usuário");
     }
   }
 
@@ -35,57 +29,82 @@ export class ApiService {
       const response = await this.api.post("/user/login", data);
       return response.data as LoginResponse;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || error.message || "Erro ao autenticar usuário");
-      }
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("Erro desconhecido");
+      this.handleError(error, "Erro ao autenticar usuário");
     }
+  }
+
+  private getAuthHeaders() {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    return token ? { Authorization: `Bearer ${token}` } : {};
   }
 
   async rifaNumbers(): Promise<Rifa[]> {
     try {
-      const response = await this.api.get("/rfa/numbers");
-      console.log(response);
+      const response = await this.api.get("/rfa/numbers", {
+        headers: this.getAuthHeaders(),
+      });
       return response.data.data as Rifa[];
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || error.message || "Erro ao buscar rifas");
-      }
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("Erro desconhecido");
+      this.handleError(error, "Erro ao buscar rifas");
     }
   }
 
   async buyNumber(id: string, email: string): Promise<unknown> {
     try {
-      const response = await this.api.put('/rfa/buynumber', { id, email });
+      const response = await this.api.put(
+        "/rfa/buynumber",
+        { id, email },
+        { headers: this.getAuthHeaders() }
+      );
       return response.data;
     } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("Erro desconhecido");
+      this.handleError(error, "Erro ao comprar número");
     }
   }
 
   async userPurchase(email: string): Promise<UserRaffleResponse> {
     try {
-      const response = await this.api.post<UserRaffleResponse>('/rfa/userpurchase', { email });
-      console.log(response);
+      const response = await this.api.post(
+        "/rfa/userpurchase",
+        { email },
+        { headers: this.getAuthHeaders() }
+      );
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || error.message || "Erro ao buscar rifas compradas");
-      }
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("Erro desconhecido");
+      this.handleError(error, "Erro ao buscar rifas compradas");
     }
+  }
+  async resetPass(email: string, currentpassword: string, newpassword: string): Promise<UserRaffleResponse> {
+    try {
+      const token = localStorage.getItem("token");
+  
+      if (!token) {
+        throw new Error("Usuário não autenticado. Faça login novamente.");
+      }
+  
+      const response = await this.api.put(
+        "/user/resetpass",
+        { email, currentpassword, newpassword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        }
+      );
+      return response.data;
+    } catch (error: unknown) {
+      this.handleError(error, "Erro ao resetar senha");
+      throw error;
+    }
+  }
+    
+    private handleError(error: unknown, defaultMessage: string): never {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || error.message || defaultMessage);
+    }
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error(defaultMessage);
   }
 }

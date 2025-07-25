@@ -12,5 +12,4 @@ export interface IUpdateUser {
   state?: string;
   email?: string;
   password?: string;
-  acesstokenApi: string;
 }

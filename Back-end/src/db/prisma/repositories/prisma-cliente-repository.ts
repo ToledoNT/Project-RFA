@@ -106,29 +106,26 @@ export class PrismaUserRepository {
 
   async update(
     userId: string,
-    value: IUpdateUser
+    value: Partial<IUpdateUser> 
   ): Promise<ResponseTemplateInterface> {
     try {
+      const existingUser = await prisma.user.findUnique({ where: { id: userId } });
+  
+      if (!existingUser) {
+        return new ResponseTemplateModel(false, 404, "Usuário não encontrado", null);
+      }
+  
       const response = await prisma.user.update({
-        where: { email: userId },
+        where: { id: userId },
         data: value,
       });
-      return new ResponseTemplateModel(
-        true,
-        200,
-        "Cliente atualizado com sucesso",
-        response
-      );
+  
+      return new ResponseTemplateModel(true, 200, "Cliente atualizado com sucesso", response);
     } catch (error) {
-      return new ResponseTemplateModel(
-        false,
-        401,
-        "Erro ao atualizar cliente",
-        error
-      );
+      return new ResponseTemplateModel(false, 500, "Erro ao atualizar cliente", error);
     }
   }
-
+  
   async findByEmail(email: string): Promise<ResponseTemplateInterface> {
     try {
       const response = await prisma.user.findUnique({

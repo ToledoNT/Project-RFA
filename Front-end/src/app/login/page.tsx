@@ -9,7 +9,6 @@ const apiService = new ApiService();
 
 export default function LoginPage() {
   const router = useRouter();
-
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [errors, setErrors] = useState<{ email?: string; senha?: string }>({});
@@ -45,13 +44,17 @@ export default function LoginPage() {
 
       if (response.success) {
         if (response.user?.isEmailConfirmed) {
-          localStorage.setItem("loggedIn", "true");
+          if (typeof window !== "undefined") {
+            localStorage.setItem("loggedIn", "true");
 
-          if (response.user) {
-            localStorage.setItem("userData", JSON.stringify(response.user));
-            localStorage.setItem("email", response.user.email);
+            if (response.user) {
+              localStorage.setItem("userData", JSON.stringify(response.user));
+              localStorage.setItem("email", response.user.email);
+              localStorage.setItem("token", response.user.token);
+            }
           }
 
+          console.log(response);
           await router.push("/home");
         } else {
           alert("Por favor, confirme seu e-mail antes de fazer login.");
