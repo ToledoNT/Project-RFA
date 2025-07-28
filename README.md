@@ -89,25 +89,25 @@ npm run dev
 🖼️ Prints da Interface
 
 **Tela de Login**  
-![Tela de Login](./public/img/login1.png)
+![Tela de Login](./docs/img/login1.png)
 
 **Rifas disponíveis**  
-![Rifas disponíveis](./public/img/Rifas2.png)
+![Rifas disponíveis](./docs/img/Rifas2.png)
 
 **Comprando Rifa**  
-![Comprando Rifa](./public/img/Comprando%20Rifas3.png)
+![Comprando Rifa](./docs/img/Comprando%20Rifas3.png)
 
 **Números comprados**  
-![Números comprados](./public/img/numeroscomprados3.png)
+![Números comprados](./docs/img/numeroscomprados3.png)
 
 **Tela de contato**  
-![Tela de contato](./public/img/contact4.png)
+![Tela de contato](./docs/img/contact4.png)
 
 **Tela de configuração**  
-![Tela de configuração](./public/img/Config5.png)
+![Tela de configuração](./docs/img/Config5.png)
 
 **Tela Sobre**  
-![Tela Sobre](./public/img/sobre6.png)
+![Tela Sobre](./docs/img/sobre6.png)
 
 📌 Estado do Projeto
 
