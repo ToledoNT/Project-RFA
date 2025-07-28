@@ -34,7 +34,7 @@ export class UpdateClienteModel {
     this.city = this.getUpdatedValue(newValue.city, oldValue.city);
     this.state = this.getUpdatedValue(newValue.state, oldValue.state);
     this.email = this.getUpdatedValue(newValue.email, oldValue.email);
-    this.password = this.getUpdatedValue(newValue.password, oldValue.password);  // adicionado
+    this.password = this.getUpdatedValue(newValue.password, oldValue.password);  
     this.isEmailConfirmed = this.getUpdatedValue(newValue.isEmailConfirmed, oldValue.isEmailConfirmed);
     this.acesstokenApi = this.getUpdatedValue(newValue.acesstokenApi, oldValue.acesstokenApi);
   }

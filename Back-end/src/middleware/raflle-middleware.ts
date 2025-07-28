@@ -18,7 +18,6 @@ export class CreateRaffleMiddleware {
   }
 }
 
-
 export class GetAllRafflesAvailableMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
     next();

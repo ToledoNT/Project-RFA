@@ -1,28 +1,128 @@
-🎟️ Project-RFA | Projeto Rifa - Aplicação Web Fullstack
+# 🎟️ Project-RFA | Plataforma de Rifas Online
 
-Este projeto é uma aplicação web fullstack em fase de desenvolvimento, que tem como objetivo oferecer uma plataforma online para criação e participação em rifas. O sistema permite aos usuários se cadastrarem, fazer login e participar das rifas disponíveis, garantindo segurança e praticidade. 🔐✨
-🚀 Tecnologias Utilizadas
+**Project-RFA** é uma aplicação **web fullstack** desenvolvida com o objetivo de oferecer uma plataforma moderna, segura e intuitiva para **criação e participação em rifas online**.
 
-    Frontend: Next.js com TypeScript, proporcionando uma interface rápida, moderna e responsiva. ⚛️💻
+Os usuários podem se cadastrar, fazer login, escolher números disponíveis e acompanhar os números comprados.
 
-    Backend: Express.js com TypeScript, garantindo robustez, tipagem e escalabilidade no servidor. ⚙️🔧
+> 🔒 **Observação**: A **integração com pagamento não foi implementada**. A aplicação foca apenas no controle dos números comprados por usuário.  
+> 🔐 O sistema utiliza **autenticação via token JWT**, garantindo segurança no acesso a rotas protegidas.
 
-    Banco de Dados: MongoDB integrado via Prisma ORM, para flexibilidade e alta performance na manipulação dos dados. 🗄️⚡
+---
 
-🔄 Estado do Projeto
+## 🚀 Tecnologias Utilizadas
+
+- **Frontend**: Next.js com TypeScript  
+- **Backend**: Express.js com TypeScript  
+- **Banco de Dados**: MongoDB com Prisma ORM  
+- **Linguagem Principal**: TypeScript  
+- **Autenticação**: JSON Web Token (JWT)
+
+---
+
+## 📁 Estrutura do Projeto
+
+project-rfa/
+├── frontend/ # Projeto Next.js (interface do usuário)
+└── backend/ # Projeto Express.js (API e lógica do servidor)
+
+
+---
+
+## 🛠️ Como Executar Localmente
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/seu-usuario/Project-RFA.git
+cd project-rfa
+
+2. Instale as dependências
+Frontend
+
+cd frontend
+npm install
+
+Backend
+
+cd ../backend
+npm install
+
+3. Configure os arquivos .env
+
+Exemplo de .env no backend:
+
+MONGO_URL=seu_link_mongodb
+JWT_SECRET=sua_chave_secreta
+
+💡 O frontend também pode precisar de variáveis públicas dependendo da sua configuração.
+4. Rode o projeto
+Backend
+
+cd backend
+npm run dev
+
+Frontend (em outro terminal)
+
+cd frontend
+npm run dev
+
+✅ Funcionalidades
+
+    Cadastro de usuários com validação
+
+    Login com autenticação via token JWT
+
+    Escolha de números disponíveis
+
+    Visualização dos números já comprados
+
+    Redirecionamento conforme autenticação
+
+❌ Funcionalidades Não Implementadas
+
+    Integração com métodos de pagamento
+
+    Dashboard administrativo completo
+
+    Confirmação de e-mail para validar usuários
+
+🖼️ Prints da Interface
+
+**Tela de Login**  
+![Tela de Login](./public/img/login1.png)
+
+**Rifas disponíveis**  
+![Rifas disponíveis](./public/img/Rifas2.png)
+
+**Comprando Rifa**  
+![Comprando Rifa](./public/img/Comprando%20Rifas3.png)
+
+**Números comprados**  
+![Números comprados](./public/img/numeroscomprados3.png)
+
+**Tela de contato**  
+![Tela de contato](./public/img/contact4.png)
+
+**Tela de configuração**  
+![Tela de configuração](./public/img/Config5.png)
+
+**Tela Sobre**  
+![Tela Sobre](./public/img/sobre6.png)
+
+📌 Estado do Projeto
 
 O projeto está em desenvolvimento contínuo, com foco em:
 
-    Escalabilidade e boas práticas de desenvolvimento.
+    Melhorias na experiência do usuário
 
-    Funcionalidades essenciais como cadastro de usuários com validação e confirmação de e-mail.
+    Implementações futuras (pagamentos, painel admin)
 
-    Autenticação segura via login.
+    Adoção de boas práticas e escalabilidade
 
-    Gestão completa de rifas.
+🤝 Contribuindo
 
-    Redirecionamentos baseados no estado de autenticação do usuário.
+Pull requests são bem-vindos!
+Fique à vontade para sugerir melhorias, correções ou novas funcionalidades.
 
-📌 Próximos Passos
 
-Instruções para setup do ambiente, instalação de dependências e execução local serão adicionadas em breve.
+---

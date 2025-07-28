@@ -9,7 +9,6 @@ export class FindRaffleById {
     if (!response.status) {
       await new CreateLog().execute(response);
     }
-
     return response;
   }
 }

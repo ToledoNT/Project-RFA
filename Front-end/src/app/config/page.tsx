@@ -6,11 +6,9 @@ export default function Configuracoes() {
   const [senhaAtual, setSenhaAtual] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
-
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const api = new ApiService();
 
   const handleAlterarSenha = async (e: React.FormEvent) => {

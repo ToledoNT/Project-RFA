@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { FaSignInAlt, FaUserPlus, FaUsers } from "react-icons/fa"; // substituído FaInfoCircle por FaUsers
+import { FaSignInAlt, FaUserPlus, FaUsers } from "react-icons/fa";
 import Footer from "./components/footer";
 
 export default function Home() {

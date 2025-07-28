@@ -21,7 +21,6 @@ export default function Menu() {
 
   return (
     <nav className="bg-gray-900 text-white w-full shadow-md fixed top-0 z-50">
-      {/* Removi max-w-7xl e mx-auto para que ocupe toda a largura da viewport */}
       <div className="w-full px-4 py-4 flex items-center">
         <h1 className="text-xl font-bold">GK Detailer</h1>
 

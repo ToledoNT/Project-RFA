@@ -17,7 +17,6 @@ export default function RecuperarSenhaPage() {
       return;
     }
 
-    // Simula envio
     setSubmitted(true);
     setTimeout(() => {
       alert("E-mail de recuperação enviado (simulado)");

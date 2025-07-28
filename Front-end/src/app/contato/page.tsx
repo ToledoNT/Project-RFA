@@ -14,7 +14,6 @@ export default function Contato() {
 
     alert("Mensagem enviada com sucesso!");
     
-    // Resetar formulário
     setNome("");
     setEmail("");
     setAssunto("");

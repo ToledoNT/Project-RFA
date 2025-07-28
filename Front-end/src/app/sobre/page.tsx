@@ -1,8 +1,6 @@
 "use client";
 
 import Footer from "../components/footer";
-
-
 export default function Sobre() {
   return (
     <div className="min-h-screen flex flex-col bg-black text-white px-6 py-12">

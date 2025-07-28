@@ -10,7 +10,6 @@ export class UpdateRaflle {
       if (!response.status) {
         await new CreateLog().execute(response);
       }
-  
       return response;
     }
   }

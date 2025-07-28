@@ -34,6 +34,7 @@ router.put(
   new BuyRaffleMiddleware().handle.bind(new BuyRaffleMiddleware()),
   buyRaffleController.handle.bind(buyRaffleController)
 );
+
 router.post(
   "/rfa/userpurchase", 
   new AuthenticateTokenMiddleware().handle.bind(new AuthenticateTokenMiddleware()),

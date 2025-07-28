@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config(); // Carrega as variáveis primeiro
+dotenv.config();
 import { server } from "./server";
 server.listen(4001, () => {
   console.clear();

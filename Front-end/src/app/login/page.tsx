@@ -54,7 +54,6 @@ export default function LoginPage() {
             }
           }
 
-          console.log(response);
           await router.push("/home");
         } else {
           alert("Por favor, confirme seu e-mail antes de fazer login.");

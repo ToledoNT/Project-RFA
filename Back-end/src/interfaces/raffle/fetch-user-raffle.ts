@@ -1,4 +1,4 @@
-import { RaffleStatus } from "@prisma/client"; // ou defina manualmente se não estiver usando o client aqui
+import { RaffleStatus } from "@prisma/client";
 import { IFetchCliente } from "../user/fetch-user-interface";
 
 export interface IFetchRaffle {

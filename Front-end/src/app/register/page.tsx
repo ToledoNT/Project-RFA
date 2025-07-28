@@ -80,8 +80,7 @@ export default function RegisterPage() {
     }
   };
   
-
-  return (
+    return (
     <div className="min-h-screen flex flex-col bg-black">
       <main className="flex-grow flex items-center justify-center px-4 py-6">
         <div className="w-full max-w-lg bg-white shadow-xl rounded-xl p-6 space-y-6">
