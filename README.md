@@ -91,23 +91,23 @@ npm run dev
 **Tela de Login**  
 ![Tela de Login](docs/login1.png)
 
-**Rifas disponíveis**  
-![Rifas disponíveis](docs/rifas2.png)
+# **Rifas disponíveis**  
+# ![Rifas disponíveis](docs/rifas2.png)
 
-**Comprando Rifa**  
-![Comprando Rifa](docs/comprandorifas3.png)
+# **Comprando Rifa**  
+# ![Comprando Rifa](docs/comprandorifas3.png)
 
-**Números comprados**  
-![Números comprados](docs/numeroscomprados3.png)
+# **Números comprados**  
+# ![Números comprados](docs/numeroscomprados3.png)
 
-**Tela de contato**  
-![Tela de contato](docs/contact4.png)
+# **Tela de contato**  
+# ![Tela de contato](docs/contact4.png)
 
-**Tela de configuração**  
-![Tela de configuração](docs/config5.png)
+# **Tela de configuração**  
+# ![Tela de configuração](docs/config5.png)
 
-**Tela Sobre**  
-![Tela Sobre](docs/sobre.png)
+# **Tela Sobre**  
+# ![Tela Sobre](docs/sobre.png)
 
 📌 Estado do Projeto
 
