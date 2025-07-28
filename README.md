@@ -92,19 +92,19 @@ npm run dev
 ![Tela de Login](./docs/img/login1.png)
 
 **Rifas disponíveis**  
-![Rifas disponíveis](./docs/img/Rifas2.png)
+![Rifas disponíveis](./docs/img/rifas2.png)
 
 **Comprando Rifa**  
-![Comprando Rifa](./docs/img/Comprando%20Rifas3.png)
+![Comprando Rifa](./docs/img/comprandorifas3.png)
 
 **Números comprados**  
-![Números comprados](./docs/img/numeroscomprados3.png)
+![Números comprados](./docs/img/numeroscomprados3.png.png)
 
 **Tela de contato**  
-![Tela de contato](./docs/img/contact4.png)
+![Tela de contato](./docs/img/contato4.png)
 
 **Tela de configuração**  
-![Tela de configuração](./docs/img/Config5.png)
+![Tela de configuração](./docs/img/config5.png)
 
 **Tela Sobre**  
 ![Tela Sobre](./docs/img/sobre6.png)
