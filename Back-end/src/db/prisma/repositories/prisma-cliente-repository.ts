@@ -36,29 +36,6 @@ export class PrismaUserRepository {
     }
   }
 
-  // async findById(value: string): Promise<ResponseTemplateInterface> {
-  //   try {
-  //     const response = await prisma.user.findMany({
-  //       where: {
-  //         : value,
-  //       },
-  //     });
-  //     return new ResponseTemplateModel(
-  //       true,
-  //       200,
-  //       "Cliente encontrado com sucesso",
-  //       response
-  //     );
-  //   } catch (error) {
-  //     return new ResponseTemplateModel(
-  //       false,
-  //       500,
-  //       "Erro ao consultar cliente",
-  //       error
-  //     );
-  //   }
-  // }
-
   async findByToken(acessToken: string): Promise<ResponseTemplateInterface> {
     try {
       const response = await prisma.user.findMany({
