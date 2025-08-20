@@ -87,27 +87,35 @@ npm run dev
     Confirmação de e-mail para validar usuários
 
 🖼️ Prints da Interface
+## ✨ Funcionalidades da Plataforma
 
-**Tela de Login**  
-![Tela de Login](./images/1-Login.png)  
+### 🔑 Tela de Login  
+![Login](images/1-Login.png)  
+ 
 
-**Rifas disponíveis**  
-![Rifas disponíveis](./images/rifas2.png)
+### 🎟️ Rifas Disponíveis  
+![Rifas disponíveis](images/rifas2.png)  
 
-**Comprando Rifa**  
-![Comprando Rifa](./images/comprandorifas3.png)
 
-**Números comprados**  
-![Números comprados](./images/numeroscomprados3.png)
+### 🛒 Comprando uma Rifa  
+![Comprando Rifa](images/comprandorifas3.png)  
+ 
 
-**Tela de contato**  
-![Tela de contato](./images/contact4.png)
+### 🔢 Números Comprados  
+![Números comprados](images/numeroscomprados3.png)  
 
-**Tela de configuração**  
-![Tela de configuração](./images/config5.png)
 
-**Tela Sobre**  
-![Tela Sobre](./images/sobre.png)
+### 📞 Tela de Contato  
+![Tela de contato](images/contact4.png)  
+ 
+
+### ⚙️ Tela de Configuração  
+![Tela de configuração](images/config5.png)  
+
+
+### ℹ️ Tela Sobre  
+![Tela Sobre](images/sobre.png)  
+ 
 
 
 📌 Estado do Projeto
