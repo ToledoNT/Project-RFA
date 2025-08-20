@@ -90,8 +90,7 @@ npm run dev
 ## ✨ Funcionalidades da Plataforma
 
 ### 🔑 Tela de Login  
-![Login](./images/login1.png)
- 
+![Tela de Login](./images/login1.png) 
 
 ### 🎟️ Rifas Disponíveis  
 ![Rifas](./images/rifas2.png)
