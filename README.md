@@ -90,33 +90,31 @@ npm run dev
 ## ✨ Funcionalidades da Plataforma
 
 ### 🔑 Tela de Login  
-![Login](./images/login1.png)  
+![Login](./images/login1.png)
  
 
 ### 🎟️ Rifas Disponíveis  
-![Rifas disponíveis](./images/rifas2.png)  
+![Rifas](./images/rifas2.png)
 
 
 ### 🛒 Comprando uma Rifa  
-![Comprando Rifa](./images/comprandorifas3.png)  
+![Comprar](./images/comprandorifas3.png)
  
 
 ### 🔢 Números Comprados  
-![Números comprados](./images/numeroscomprados3.png)  
+![Números](./images/numeroscomprados3.png)
 
 
 ### 📞 Tela de Contato  
-![Tela de contato](./images/contact4.png)  
+![Contato](./images/contact4.png)
  
 
 ### ⚙️ Tela de Configuração  
-![Tela de configuração](./images/config5.png)  
+![Configuração](./images/config5.png)
 
 
 ### ℹ️ Tela Sobre  
-![Tela Sobre](./images/sobre.png)  
- 
-
+![Sobre](./images/sobre.png)
 
 📌 Estado do Projeto
 
