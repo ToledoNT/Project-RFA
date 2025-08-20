@@ -91,25 +91,25 @@ npm run dev
 ## ✨ Funcionalidades da Plataforma
 
 ### 🔑 Tela de Login  
-![Tela de Login](./images/login1.png)
+![Tela de Login](https://raw.githubusercontent.com/ToledoNT/Project-RFA/main/images/login1.png)
 
 ### 🎟️ Rifas Disponíveis  
-![Rifas Disponíveis](./images/rifas2.png)
+![Rifas Disponíveis](https://raw.githubusercontent.com/ToledoNT/Project-RFA/main/images/rifas2.png)
 
 ### 🛒 Comprando uma Rifa  
-![Comprando uma Rifa](./images/comprandorifas3.png)
+![Comprando uma Rifa](https://raw.githubusercontent.com/ToledoNT/Project-RFA/main/images/comprandorifas3.png)
 
 ### 🔢 Números Comprados  
-![Números Comprados](./images/numeroscomprados3.png)
+![Números Comprados](https://raw.githubusercontent.com/ToledoNT/Project-RFA/main/images/numeroscomprados3.png)
 
 ### 📞 Tela de Contato  
-![Tela de Contato](./images/contact4.png)
+![Tela de Contato](https://raw.githubusercontent.com/ToledoNT/Project-RFA/main/images/contact4.png)
 
 ### ⚙️ Tela de Configuração  
-![Tela de Configuração](./images/config5.png)
+![Tela de Configuração](https://raw.githubusercontent.com/ToledoNT/Project-RFA/main/images/config5.png)
 
 ### ℹ️ Tela Sobre  
-![Tela Sobre](./images/sobre.png)
+![Tela Sobre](https://raw.githubusercontent.com/ToledoNT/Project-RFA/main/images/sobre.png)
 
 
 📌 Estado do Projeto
