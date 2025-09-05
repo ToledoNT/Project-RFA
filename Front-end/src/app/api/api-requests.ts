@@ -18,6 +18,7 @@ export class ApiService {
   async registerUser(data: IRegisterFormData): Promise<{ success: boolean; message?: string }> {
     try {
       const response = await this.api.post("/user/register", data);
+      console.log(response + "aqui");
       return response.data;
     } catch (error) {
       this.handleError(error, "Erro ao registrar usuário");

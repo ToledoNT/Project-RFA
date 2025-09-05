@@ -7,11 +7,17 @@ import jwt from "jsonwebtoken";
 export class ClienteMiddleware {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
     const data = req.body;
-
+    console.log(data);
     const isCreatingClient =
       req.method === "POST" && req.originalUrl === "/api/user/register";
 
     if (isCreatingClient) {
+      // 🔹 Ajuste: normalizar confirmPass -> confirmPassword
+      if (data.confirmPass && !data.confirmPassword) {
+        data.confirmPassword = data.confirmPass;
+        delete data.confirmPass;
+      }
+
       const requiredFields: string[] = [
         "name",
         "lastname",
