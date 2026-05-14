@@ -111,21 +111,4 @@ npm run dev
 ### ℹ️ Tela Sobre  
 ![Tela Sobre](https://raw.githubusercontent.com/ToledoNT/Project-RFA/main/images/sobre.png)
 
-
-📌 Estado do Projeto
-
-O projeto está em desenvolvimento contínuo, com foco em:
-
-    Melhorias na experiência do usuário
-
-    Implementações futuras (pagamentos, painel admin)
-
-    Adoção de boas práticas e escalabilidade
-
-🤝 Contribuindo
-
-Pull requests são bem-vindos!
-Fique à vontade para sugerir melhorias, correções ou novas funcionalidades.
-
-
 ---
